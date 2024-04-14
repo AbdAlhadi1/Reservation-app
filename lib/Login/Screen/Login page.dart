@@ -46,6 +46,9 @@ class _LoginState extends State<Login> {
                             leftPadding: 20.0,
                             color: Colors.white,
                             sidesColor: Colors.black,
+                            borderRadius: BorderRadius.circular(20),
+                            height: 65.0,
+                            width: MediaQuery.of(context).size.width,
                             val: (_) {
                               if (emailController.text.isEmpty) {
                                 return "required";
@@ -71,6 +74,9 @@ class _LoginState extends State<Login> {
                             leftPadding: 20.0,
                             color: Colors.white,
                             sidesColor: Colors.black,
+                            borderRadius: BorderRadius.circular(20),
+                            height: 65.0,
+                            width: MediaQuery.of(context).size.width,
                             val: (_) {
                               if (passwordController.text.isEmpty) {
                                 return "required";
