@@ -79,6 +79,7 @@ class _SignupPageState extends State<SignupPage> {
                               preffixIcon: Icon(Icons.person,size: 22,color: thirdColor),
                               contorller: firstNameController,
                               hintText: "First Name",
+                              inputTextColor: thirdColor,
                               obscure: false,
                               readOnly: false,
                               rightPadding: 20.0,
@@ -86,7 +87,7 @@ class _SignupPageState extends State<SignupPage> {
                               color: mainColor ,
                               sidesColor: secondColor,
                               borderRadius: BorderRadius.circular(12),
-                              height: 65.0,
+                              height: 70.5,
                               width: 150.0,
                               maxLine: 1,
                               val: (_){
@@ -113,6 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                               preffixIcon: Icon(Icons.person,size: 22,color: thirdColor,),
                               contorller: lastNameController,
                               obscure: false,
+                              inputTextColor: thirdColor,
                               readOnly: false,
                               hintText: "Last Name",
                               rightPadding: 20.0,
@@ -120,7 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                               color: mainColor ,
                               sidesColor: secondColor,
                               borderRadius: BorderRadius.circular(12),
-                              height: 65.0,
+                              height: 70.5,
                               width: 150.0,
                               maxLine: 1,
                               val: (_){
@@ -150,13 +152,14 @@ class _SignupPageState extends State<SignupPage> {
                         MyFild(
                             contorller: emailController,
                             obscure: false,
+                            inputTextColor: thirdColor,
                             preffixIcon:Icon(Icons.email,size: 22,color: thirdColor,),
                             hintText: "Email",
                             borderRadius: BorderRadius.circular(12),
                             readOnly: false,
                             rightPadding: 20.0,
                             leftPadding: 20.0,
-                            height: 65.0,
+                            height: 70.5,
                             width: MediaQuery.of(context).size.width,
                             color: mainColor ,
                             sidesColor: secondColor,
@@ -189,11 +192,12 @@ class _SignupPageState extends State<SignupPage> {
                         MyFild(
                             contorller: passwordController,
                             obscure: isVisible,
+                            inputTextColor: thirdColor,
                             borderRadius: BorderRadius.circular(12),
                             readOnly: false,
                             rightPadding: 20.0,
                             leftPadding: 20.0,
-                            height: 65.0,
+                            height: 70.5,
                             width: MediaQuery.of(context).size.width,
                             color: mainColor ,
                             sidesColor: secondColor,
@@ -204,7 +208,7 @@ class _SignupPageState extends State<SignupPage> {
                                 setState(() {
                                   isVisible = !isVisible;
                                 });
-                            }, icon: (isVisible == true ) ?Icon(Icons.visibility,color: thirdColor,) :Icon(Icons.visibility_off,color: thirdColor,)),
+                            }, icon: (isVisible == true ) ?Icon(Icons.visibility_off,color: thirdColor,):Icon(Icons.visibility,color: thirdColor,)),
                             val: (_){
                               if(passwordController.text.isEmpty){
                                 return "required";
@@ -232,13 +236,14 @@ class _SignupPageState extends State<SignupPage> {
                           ),),
                         ),
                         MyFild(
+                          inputTextColor: thirdColor,
                           contorller: confirmPasswordController,
                           obscure: isVisible1,
                           borderRadius: BorderRadius.circular(12),
                           readOnly: false,
                           rightPadding: 20.0,
                           leftPadding: 20.0,
-                          height: 65.0,
+                          height: 70.5,
                           width: MediaQuery.of(context).size.width,
                           color: mainColor ,
                           sidesColor: secondColor,
@@ -249,7 +254,7 @@ class _SignupPageState extends State<SignupPage> {
                             setState(() {
                               isVisible1 = !isVisible1;
                             });
-                          }, icon: (isVisible1 == true ) ?Icon(Icons.visibility,color: thirdColor,) :Icon(Icons.visibility_off,color: thirdColor,)),
+                          }, icon: (isVisible1 == true ) ?Icon(Icons.visibility_off,color: thirdColor,):Icon(Icons.visibility,color: thirdColor,) ),
                             val: (_){
                               if(confirmPasswordController.text.isEmpty){
                                 return "required";
@@ -277,6 +282,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),),
                         ),
                         MyFild(
+                            inputTextColor: thirdColor,
                             preffixIcon: Icon(Icons.phone,size: 22,color: thirdColor,),
                             contorller: phoneController,
                             hintText: "Phone Number",
@@ -285,7 +291,7 @@ class _SignupPageState extends State<SignupPage> {
                             readOnly: false,
                             rightPadding: 20.0,
                             leftPadding: 20.0,
-                            height: 65.0,
+                            height: 70.5,
                             width: MediaQuery.of(context).size.width,
                             color: mainColor ,
                             sidesColor: secondColor,
@@ -320,6 +326,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),),
                         ),
                         MyFild(
+                          inputTextColor: thirdColor,
                           contorller: ageController,
                           hintText: "Age",
                           obscure: false,
@@ -330,7 +337,7 @@ class _SignupPageState extends State<SignupPage> {
                           leftPadding: 20.0,
                           keyboardType: TextInputType.number,
                           borderRadius: BorderRadius.circular(12),
-                          height: 65.0,
+                          height: 70.5,
                           width: MediaQuery.of(context).size.width,
                           val: (_){
                             if(ageController.text.isEmpty){

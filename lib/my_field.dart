@@ -25,8 +25,10 @@ class MyFild extends StatefulWidget {
   final width;
   final containerColor;
   final prefixText;
+  final inputTextColor;
   MyFild(
       {super.key,
+        required this.inputTextColor,
         required this.contorller,
         this.hintText,
         required this.obscure,
@@ -66,8 +68,8 @@ class _MyFildState extends State<MyFild> {
         height: widget.height,
         width: widget.width,
         child: TextFormField(
-            style: const TextStyle(
-              color: Colors.white
+            style: TextStyle(
+              color: widget.inputTextColor,
             ),
             maxLines: widget.maxLine,
             maxLength: widget.maxLetters,
