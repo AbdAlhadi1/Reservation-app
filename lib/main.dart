@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
 import 'package:reservationapp/Signup/Screen/Signup%20page.dart';
 
 import 'Login/Screen/Login page.dart';
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: true,
-      home: Login()
+      debugShowCheckedModeBanner: false,
+      home: HomePage()
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservationapp/Signup/Api/Signup%20Api.dart';
+import 'package:reservationapp/Signup/Screen/code_verification_page.dart';
 import 'package:tuple/tuple.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +32,7 @@ class SendSignupData extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if(snapshot.connectionState == ConnectionState.done){
               if(snapshot.data!.item1 == true){
-                return const Center(child: Text("done"),);
+                return CodeVerificationForSignupPage(email: emailController);
               } else {
                 return AlertDialog(
                   title: const Text("ERROR"),

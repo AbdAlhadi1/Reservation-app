@@ -143,7 +143,7 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.only(left: 28),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SendEmailForForgetPassword()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const EnterEmailForForgetPassword()));
                             },
                           child: Text(
                             "Forget password",

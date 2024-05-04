@@ -1,17 +1,17 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Forget%20Password/Screen/code_verification_page.dart';
+import 'package:reservationapp/Forget%20Password/Widget/Send%20Email%20For%20Forget%20Password.dart';
 import 'package:reservationapp/my_field.dart';
 
 
-class SendEmailForForgetPassword extends StatefulWidget {
-  const SendEmailForForgetPassword({super.key});
+class EnterEmailForForgetPassword extends StatefulWidget {
+  const EnterEmailForForgetPassword({super.key});
 
   @override
-  State<SendEmailForForgetPassword> createState() => _SendEmailForForgetPasswordState();
+  State<EnterEmailForForgetPassword> createState() => _SendEmailForForgetPasswordState();
 }
 
-class _SendEmailForForgetPasswordState extends State<SendEmailForForgetPassword> {
+class _SendEmailForForgetPasswordState extends State<EnterEmailForForgetPassword> {
   Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -100,7 +100,7 @@ class _SendEmailForForgetPasswordState extends State<SendEmailForForgetPassword>
                     ),
                     onPressed: (){
                       if(formCheck()){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CodeVerificationForForgetPasswordPage(email: emailController.text)));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SendEmailForForgetPassword(emailController: emailController)));
                       }
                     },child: Text("Send",style: TextStyle(
                     color: thirdColor,

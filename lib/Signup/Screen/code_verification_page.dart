@@ -4,13 +4,19 @@ import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class CodeVerificationForSignupPage extends StatefulWidget {
-  String email;
+  TextEditingController email;
   CodeVerificationForSignupPage({
     required this.email,
     super.key,
   });
   @override
   State<StatefulWidget> createState() => _CodeVerificationForSignupPage();
+
+}
+
+class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage> {
+  final _focusNode = FocusNode();
+  Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
   TextEditingController firstDigit = TextEditingController();
   TextEditingController secondDigit = TextEditingController();
   TextEditingController thirdDigit = TextEditingController();
@@ -18,12 +24,6 @@ class CodeVerificationForSignupPage extends StatefulWidget {
   TextEditingController fifthDigit = TextEditingController();
   TextEditingController sixthDigit = TextEditingController();
   String code = "";
-}
-
-class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage> {
-  final _focusNode = FocusNode();
-  Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
-
   @override
   void initState() {
     super.initState();
@@ -55,7 +55,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                     color: thirdColor,
                     fontSize: 16
                 ),),
-                Text(widget.email,style: TextStyle(fontSize: 16,color: thirdColor),),
+                Text(widget.email.text,style: TextStyle(fontSize: 16,color: thirdColor),),
                 Form(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
@@ -71,7 +71,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             ),
                             focusNode: _focusNode,
                             autofocus: true,
-                            controller: widget.firstDigit,
+                            controller: firstDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -92,7 +92,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.secondDigit,
+                            controller: secondDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -113,7 +113,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.thirdDigit,
+                            controller: thirdDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -134,7 +134,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.fourthDigit,
+                            controller: fourthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -155,7 +155,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.fifthDigit,
+                            controller: fifthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -176,7 +176,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.sixthDigit,
+                            controller: sixthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -201,7 +201,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                       padding: const EdgeInsets.only(left: 100,right: 100)
                   ),
                   onPressed: (){
-                    widget.code = widget.firstDigit.text.toString()+widget.secondDigit.text.toString()+widget.thirdDigit.text.toString()+widget.fourthDigit.text.toString()+widget.fifthDigit.text.toString()+widget.sixthDigit.text.toString();
+                    code = firstDigit.text.toString()+secondDigit.text.toString()+thirdDigit.text.toString()+fourthDigit.text.toString()+fifthDigit.text.toString()+sixthDigit.text.toString();
                     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => CodeVerificationProcess(email: widget.email, code: widget.code)));
                   },
                   child:Text("Send" , style: TextStyle(
@@ -211,27 +211,6 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                   ),),
                 ),
                 const SizedBox(height: 35,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30,),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Did not get the Code ?",style: TextStyle(
-                          color: thirdColor
-                      ),),
-                      InkWell(
-                        onTap: (){
-                          //Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ResendEmailCode(email: widget.email)));
-                        },
-                        child: Text("Resend Code",style: TextStyle(
-                            color: secondColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600
-                        ),),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

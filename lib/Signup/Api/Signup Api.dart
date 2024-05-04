@@ -54,7 +54,7 @@ class SignupApi{
       print(city);
       print(phoneController.text);
       print("helllllllllloooo111111111111111111");
-      Response response = await post(Uri.parse("http://127.0.0.1:8006/users/signup/")
+      Response response = await post(Uri.parse(UserUrls.userServiceHost+UserUrls.signupUrl)
           ,body:{
             "username" : username,
             "password" : passwordController.text,

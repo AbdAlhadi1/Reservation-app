@@ -5,24 +5,25 @@ import 'package:reservationapp/Forget%20Password/Screen/Reset%20Password%20Page.
 
 // ignore: must_be_immutable
 class CodeVerificationForForgetPasswordPage extends StatefulWidget {
-   String email;
+   TextEditingController emailController;
    CodeVerificationForForgetPasswordPage({
-     required this.email,
+     required this.emailController,
      super.key,
   });
   @override
   State<StatefulWidget> createState() => _CodeVerificationForForgetPasswordPage();
+
+}
+
+class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForForgetPasswordPage> {
+  final _focusNode = FocusNode();
+  String code = "";
   TextEditingController firstDigit = TextEditingController();
   TextEditingController secondDigit = TextEditingController();
   TextEditingController thirdDigit = TextEditingController();
   TextEditingController fourthDigit = TextEditingController();
   TextEditingController fifthDigit = TextEditingController();
   TextEditingController sixthDigit = TextEditingController();
-  String code = "";
-}
-
-class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForForgetPasswordPage> {
-  final _focusNode = FocusNode();
   Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
 
   @override
@@ -56,7 +57,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                     color: thirdColor,
                   fontSize: 16
                 ),),
-                Text(widget.email,style: TextStyle(fontSize: 16,color: thirdColor),),
+                Text(widget.emailController.text,style: TextStyle(fontSize: 16,color: thirdColor),),
                 Form(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
@@ -72,7 +73,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             ),
                             focusNode: _focusNode,
                             autofocus: true,
-                            controller: widget.firstDigit,
+                            controller: firstDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -93,7 +94,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.secondDigit,
+                            controller: secondDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -114,7 +115,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.thirdDigit,
+                            controller: thirdDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -135,7 +136,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.fourthDigit,
+                            controller: fourthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -156,7 +157,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.fifthDigit,
+                            controller: fifthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -177,7 +178,7 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                             style: TextStyle(
                                 color: thirdColor
                             ),
-                            controller: widget.sixthDigit,
+                            controller: sixthDigit,
                             onChanged: (val) {
                               if (val.length == 1) {
                                 FocusScope.of(context).nextFocus();
@@ -202,8 +203,8 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                     padding: const EdgeInsets.only(left: 100,right: 100)
                   ),
                   onPressed: (){
-                    widget.code = widget.firstDigit.text.toString()+widget.secondDigit.text.toString()+widget.thirdDigit.text.toString()+widget.fourthDigit.text.toString()+widget.fifthDigit.text.toString()+widget.sixthDigit.text.toString();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ResetPasswordPage()));
+                    code = firstDigit.text.toString()+secondDigit.text.toString()+thirdDigit.text.toString()+fourthDigit.text.toString()+fifthDigit.text.toString()+sixthDigit.text.toString();
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ResetPasswordPage(emailController: widget.emailController,)));
                     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => CodeVerificationProcess(email: widget.email, code: widget.code)));
                   },
                   child:Text("Send" , style: TextStyle(

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:reservationapp/Forget%20Password/Widget/Send%20New%20Password%20For%20Forget%20Password.dart';
 import 'package:reservationapp/my_field.dart';
 
 
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+  TextEditingController emailController;
+  ResetPasswordPage({
+    super.key,
+    required this.emailController,
+
+  });
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -15,6 +21,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isVisible = true, isVisible1 = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +136,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       padding: const EdgeInsets.only(left: 90,right: 90)
                     ),
                     onPressed: (){
-
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SendNewPasswordForForgetPassword(emailController: widget.emailController, newPassword: passwordController)));
                 }, child: Text("Reset Password",style: TextStyle(
                   color: thirdColor,
                   fontSize: 16,
