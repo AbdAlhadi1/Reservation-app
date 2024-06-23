@@ -54,7 +54,7 @@ class SignupApi{
       print(city);
       print(phoneController.text);
       print("helllllllllloooo111111111111111111");
-      Response response = await post(Uri.parse(UserUrls.userServiceHost+UserUrls.signupUrl)
+      Response response = await post(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.signupUrl)
           ,body:{
             "username" : username,
             "password" : passwordController.text,
@@ -65,7 +65,7 @@ class SignupApi{
             "country" : "Syria",
             "city" : city,
             "phone" : phoneController.text
-          }
+          },
       );
       print("helllllllllllllllooooooooooooooooooooooo22222222222222222");
       if(response.statusCode == 200){

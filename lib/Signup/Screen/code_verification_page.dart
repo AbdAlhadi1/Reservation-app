@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:reservationapp/Signup/Widget/Send%20Verification%20Code%20For%20Signup.dart';
 
 
 // ignore: must_be_immutable
 class CodeVerificationForSignupPage extends StatefulWidget {
-  TextEditingController email;
+  var email;
   CodeVerificationForSignupPage({
-    required this.email,
+    this.email,
     super.key,
   });
   @override
@@ -55,7 +56,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                     color: thirdColor,
                     fontSize: 16
                 ),),
-                Text(widget.email.text,style: TextStyle(fontSize: 16,color: thirdColor),),
+                Text("",style: TextStyle(fontSize: 16,color: thirdColor),),
                 Form(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
@@ -202,7 +203,7 @@ class _CodeVerificationForSignupPage extends State<CodeVerificationForSignupPage
                   ),
                   onPressed: (){
                     code = firstDigit.text.toString()+secondDigit.text.toString()+thirdDigit.text.toString()+fourthDigit.text.toString()+fifthDigit.text.toString()+sixthDigit.text.toString();
-                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => CodeVerificationProcess(email: widget.email, code: widget.code)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendVerificationCodeForSignUp(code: code,)));
                   },
                   child:Text("Send" , style: TextStyle(
                       color: thirdColor,

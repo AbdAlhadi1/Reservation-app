@@ -9,7 +9,7 @@ class ForgetPasswordApi{
 
   Future<Tuple2<bool,String>> sendEmailForForgetPassword(TextEditingController emailController) async {
     try{
-      Response response = await get(Uri.parse(UserUrls.userServiceHost+UserUrls.sendEmailAndReceiveVerificationCode+emailController.text.toString()),);
+      Response response = await get(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.sendEmailAndReceiveVerificationCode+emailController.text.toString()),);
 
       if(response.statusCode == 200){
         print(response.statusCode);
@@ -28,9 +28,9 @@ class ForgetPasswordApi{
   }
 
 
-  Future<Tuple2<bool,String>> sendVerificationCodeForForgetPassword(TextEditingController emailController , String verificationCode) async {
+  Future<Tuple2<bool,String>> sendVerificationCodeForForgetPassword(String verificationCode) async {
     try{
-      Response response = await post(Uri.parse(UserUrls.userServiceHost+UserUrls.sendVerificationCode),
+      Response response = await post(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.sendVerificationCode),
           body: {
             "code": verificationCode,
           });
@@ -54,7 +54,7 @@ class ForgetPasswordApi{
 
   Future<Tuple2<bool,String>> sendNewPasswordForForgetPassword(TextEditingController emailController , TextEditingController newPassword) async {
     try{
-      Response response = await put(Uri.parse(UserUrls.userServiceHost+UserUrls.sendNewPasswordForForgetPassword),
+      Response response = await put(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.sendNewPasswordForForgetPassword),
           body: {
             "email": emailController.text,
             "password": newPassword.text,

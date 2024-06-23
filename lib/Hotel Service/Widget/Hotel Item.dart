@@ -5,6 +5,7 @@ Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954)
 
 
 
+// ignore: must_be_immutable
 class RoomInfo extends StatelessWidget {
   String informationName;
   int numberForTheInformation;
@@ -32,6 +33,7 @@ class RoomInfo extends StatelessWidget {
 
 
 
+// ignore: must_be_immutable
 class RatingStars extends StatelessWidget {
   int coloredStar;
   RatingStars({
@@ -68,7 +70,7 @@ class HotelItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
+            SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 230,
                 child: const Image(image: AssetImage("images/hoteltest.jpg"),fit: BoxFit.fill,)
@@ -120,8 +122,8 @@ class HotelItem extends StatelessWidget {
             ),
             const SizedBox(height: 20,),
             const Padding(
-              padding: const EdgeInsets.only(left: 17,right: 17,),
-              child: const Text("ashdf kjhasjgf jsadg fhjg asdgfasj gfjhsga dfjhs gad fjhs gadhj sad jgfsj adhgf jshgad fjhsgdfj hsgadf hjsgad jfhgsa djfsaj dgfsajh sgkasdg kasgfks gfja ksgfja ksgksd gfjs akdf",style: TextStyle(
+              padding: EdgeInsets.only(left: 17,right: 17,),
+              child: Text("ashdf kjhasjgf jsadg fhjg asdgfasj gfjhsga dfjhs gad fjhs gadhj sad jgfsj adhgf jshgad fjhsgdfj hsgadf hjsgad jfhgsa djfsaj dgfsajh sgkasdg kasgfks gfja ksgfja ksgksd gfjs akdf",style: TextStyle(
                 fontSize: 16,
               ),),
             ),

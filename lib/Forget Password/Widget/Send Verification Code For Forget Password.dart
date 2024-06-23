@@ -21,7 +21,7 @@ class SendVerificationCodeForForgetPassword extends StatelessWidget {
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future: ob.sendVerificationCodeForForgetPassword(emailController, code),
+              future: ob.sendVerificationCodeForForgetPassword(code),
               builder: (context,AsyncSnapshot<Tuple2<bool,String>> snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();

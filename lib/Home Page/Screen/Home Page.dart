@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
               // hotel category item
               CategoryItemForHomePage(
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const HotelsPage()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const HotelsPage()));
                 },
                 categoryName: "HOTELS",
                 imageForTheCategory: "images/hotel.png",

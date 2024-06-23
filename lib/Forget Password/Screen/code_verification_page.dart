@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reservationapp/Forget%20Password/Screen/Reset%20Password%20Page.dart';
+import 'package:reservationapp/Forget%20Password/Widget/Send%20Verification%20Code%20For%20Forget%20Password.dart';
 
 
 // ignore: must_be_immutable
@@ -204,8 +205,8 @@ class _CodeVerificationForForgetPasswordPage extends State<CodeVerificationForFo
                   ),
                   onPressed: (){
                     code = firstDigit.text.toString()+secondDigit.text.toString()+thirdDigit.text.toString()+fourthDigit.text.toString()+fifthDigit.text.toString()+sixthDigit.text.toString();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ResetPasswordPage(emailController: widget.emailController,)));
-                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => CodeVerificationProcess(email: widget.email, code: widget.code)));
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ResetPasswordPage(emailController: widget.emailController,)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendVerificationCodeForForgetPassword(code: code, emailController: widget.emailController)));
                   },
                   child:Text("Send" , style: TextStyle(
                     color: thirdColor,
