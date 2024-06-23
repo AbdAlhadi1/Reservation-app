@@ -148,6 +148,7 @@ class HotelServiceApi{
       }
       Response secondFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelDetails}$hotelId"));
       if(secondFunctionResponse.statusCode == 200){
+        firstFun = true;
         print ("second Function work successful ${secondFunctionResponse.statusCode}");
         var info = jsonDecode(secondFunctionResponse.body);
         secondFunctionInfo = info;
@@ -157,6 +158,7 @@ class HotelServiceApi{
       }
       Response thirdFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelFeatures}$hotelId"));
       if(thirdFunctionResponse.statusCode == 200){
+        thirdFun = true;
         print ("third Function work successful ${thirdFunctionResponse.statusCode}");
         var info = jsonDecode(thirdFunctionResponse.body);
         featureId = info["id"];
@@ -169,6 +171,7 @@ class HotelServiceApi{
 
       Response fourthFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelImage}"));
       if(fourthFunctionResponse.statusCode == 200){
+        fourthFun = true;
         print ("fourth Function work successful ${fourthFunctionResponse.statusCode}");
         var info = jsonDecode(fourthFunctionResponse.body);
         imageId = info["id"];
@@ -180,6 +183,7 @@ class HotelServiceApi{
 
       Response lastFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelStays}$hotelId"));
       if(lastFunctionResponse.statusCode == 200){
+        lastFun = true;
         print ("last Function work successful ${lastFunctionResponse.statusCode}");
         var info = jsonDecode(lastFunctionResponse.body);
         stayType = info["stay_type"];
@@ -223,5 +227,6 @@ class HotelServiceApi{
      }
 
   }
-  
+
+
 }

@@ -6,6 +6,8 @@ class UserUrls{
   static const String sendEmailAndReceiveVerificationCode = "users/SendEmailAndReceiveVerificationCodeEmail/";
   static const String sendVerificationCode = "users/SendVerificationCode/";
   static const String sendNewPasswordForForgetPassword = "users/password_reset/";
+  static const String logoutUrl = "users/delete_user/";
+  static const String editUserInfo = "users/edit_user_info/";
 }
 
 
