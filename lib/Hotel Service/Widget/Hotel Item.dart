@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reservationapp/Classes/Hotel.dart';
+import 'package:reservationapp/Hotel%20Service/Widget/Get%20Hotel%20Details.dart';
 
 Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
 
@@ -58,9 +60,19 @@ class RatingStars extends StatelessWidget {
 
 
 class HotelItem extends StatelessWidget {
-  const HotelItem({super.key});
+  OneHotel oneHotel;
+
+  HotelItem({super.key,required this.oneHotel});
   @override
   Widget build(BuildContext context) {
+    String creationDate = "";
+    for(int i=0;i<oneHotel.creationDate.length;i++){
+      if(oneHotel.creationDate[i] != 'T'){
+        creationDate += oneHotel.creationDate[i];
+      } else {
+        break;
+      }
+    }
     return InkWell(
       onTap: (){
 
@@ -73,65 +85,77 @@ class HotelItem extends StatelessWidget {
             SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 230,
-                child: const Image(image: AssetImage("images/hoteltest.jpg"),fit: BoxFit.fill,)
+                child: Image(image: NetworkImage(oneHotel.hotelMainPhoto),fit: BoxFit.fill,)
             ),
             const SizedBox(height:10,),
-            const Padding(
-              padding: EdgeInsets.only(left: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("100 \$ Per Night",style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
-                  ),),
-                ],
-              ),
-            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Text("Dubai Hotel",style: TextStyle(
+                Text("${oneHotel.hotelName} hotel",style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),),
                 RatingStars(coloredStar: 3),
               ],
             ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                RoomInfo(
-                    informationName: "Bed",
-                    numberForTheInformation: 3,
-                    informationIcon: Icons.bed
-                ),
-                RoomInfo(
-                    informationName: "Bath",
-                    numberForTheInformation: 1,
-                    informationIcon: Icons.bathtub
-                ),
-                RoomInfo(
-                    informationName: "Wifi",
-                    numberForTheInformation: 0,
-                    informationIcon: Icons.wifi_off
-                ),
-              ],
+            Padding(
+              padding:  const EdgeInsets.only(left: 50,top: 10),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.email_rounded,color: secondColor,),
+                      const SizedBox(width: 30,),
+                      Text(oneHotel.hotelEmail,style: const TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                  const SizedBox(height: 8,),
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_month,color: secondColor,),
+                      const SizedBox(width: 30,),
+                      Text(creationDate ,style: const TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+
+                  const SizedBox(height: 8,),
+
+                  Row(
+                    children: [
+                      Icon(Icons.location_on,color: secondColor,),
+                      const SizedBox(width: 30,),
+                      Text(oneHotel.hotelCountry,style: const TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+
+                  const SizedBox(height: 8,),
+
+                  Row(
+                    children: [
+                      Icon(Icons.phone,color: secondColor,),
+                      const SizedBox(width: 30,),
+                      Text(oneHotel.hotelPhone,style: const TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                ],
+              ),
             ),
+
             const SizedBox(height: 20,),
-            const Padding(
-              padding: EdgeInsets.only(left: 17,right: 17,),
-              child: Text("ashdf kjhasjgf jsadg fhjg asdgfasj gfjhsga dfjhs gad fjhs gadhj sad jgfsj adhgf jshgad fjhsgdfj hsgadf hjsgad jfhgsa djfsaj dgfsajh sgkasdg kasgfks gfja ksgfja ksgksd gfjs akdf",style: TextStyle(
-                fontSize: 16,
-              ),),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(onPressed: (){
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetHotelDetails(hotelId: oneHotel.hotelId)));
                 },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: secondColor,
@@ -141,7 +165,6 @@ class HotelItem extends StatelessWidget {
                   ),),
                 ),
                 ElevatedButton(onPressed: (){
-
                 },style: ElevatedButton.styleFrom(
                     backgroundColor: mainColor,
                     shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero)

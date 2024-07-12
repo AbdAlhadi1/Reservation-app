@@ -5,11 +5,11 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:reservationapp/Classes/User.dart';
 import 'package:reservationapp/Server/host.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInfoApi {
 
-  void saveUserData (var info) async {
+  /*void saveUserData (var info) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     await sp.setString("username", info["username"]);
     await sp.setString("password", info["password"]);
@@ -20,7 +20,7 @@ class UserInfoApi {
     await sp.setString("country", info["country"]);
     await sp.setString("city", info["city"]);
     await sp.setString("phoneNumber", info["phone"]);
-  }
+  }*/
 
 
   Future updateUserInfo (User user) async {
@@ -43,7 +43,7 @@ class UserInfoApi {
       if(response.statusCode == 200){
         print("update user Info successful ${response.statusCode}");
         var info = jsonDecode(response.body);
-        saveUserData(info);
+        //saveUserData(info);
         
       }
 

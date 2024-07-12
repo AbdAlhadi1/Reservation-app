@@ -2,7 +2,7 @@
 
 
 class OneHotel {
-  late int hotelId,city;
+  late int hotelId,cityId;
   late String hotelMainPhoto,
       hotelName,
       hotelEmail,
@@ -15,7 +15,7 @@ class OneHotel {
 
   OneHotel({
     required this.hotelId,
-    required this.city,
+    required this.cityId,
     required this.hotelMainPhoto,
     required this.hotelName,
     required this.hotelEmail,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:reservationapp/Home%20Page/Widget/Category%20Item%20For%20Home%20Page.dart';
+import 'package:reservationapp/Hotel%20Service/Screen/Cities%20Page.dart';
 import 'package:reservationapp/Hotel%20Service/Screen/Hotels%20Page.dart';
+import 'package:reservationapp/Hotel%20Service/Widget/Get%20Cities%20For%20Hotels.dart';
+import 'package:reservationapp/Hotel%20Service/Widget/Get%20Hotles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               // hotel category item
               CategoryItemForHomePage(
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const HotelsPage()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const GetCitiesForHotels()));
                 },
                 categoryName: "HOTELS",
                 imageForTheCategory: "images/hotel.png",
@@ -39,7 +42,8 @@ class _HomePageState extends State<HomePage> {
               // restaurant category item
               CategoryItemForHomePage(
                   onTap: (){
-          
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const GetHotels()));
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const HotelsPage()));
                   },
                   categoryName: "RESTAURANT",
                   imageForTheCategory: "images/restaurant.png"

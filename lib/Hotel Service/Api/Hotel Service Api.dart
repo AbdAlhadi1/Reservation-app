@@ -14,7 +14,7 @@ import '../../Server/host.dart';
 
 class HotelServiceApi{
 
-  Future<Tuple2<bool,List>> getCities()async{
+  Future getCities()async{
     try{
 
       Response response = await get(Uri.parse(HotelsUrls.hotelServiceBaseUrl+HotelsUrls.getCities));
@@ -32,11 +32,10 @@ class HotelServiceApi{
           );
           citiesArray.add(oneCity);
         }
-        Cities cities = Cities(count: info["count"], nextUrl: info["next"], previousUrl: info["previous"], citiesArray: citiesArray);
+        Cities cities = Cities(count: info["count"] , nextUrl: info["next"] ?? "", previousUrl: info["previous"] ?? "", citiesArray: citiesArray);
         return Tuple2(true,[cities]);
       }
       else {
-        print(response.statusCode);
         var error = [];
         error.add(utf8.decode(response.bodyBytes));
         return Tuple2(false, error);
@@ -60,7 +59,7 @@ class HotelServiceApi{
         for(int i=0;i<info["results"].length; i++){
           OneHotel oneHotel = OneHotel(
               hotelId: info["results"][i]["id"],
-              city: info["results"][i]["city"],
+              cityId: info["results"][i]["city"],
               hotelMainPhoto: info["results"][i]["main_image"],
               hotelName: info["results"][i]["name"],
               hotelEmail: info["results"][i]["email"],
@@ -95,10 +94,11 @@ class HotelServiceApi{
         print(response.statusCode);
         var info = jsonDecode(response.body);
         List<OneHotel> op = [];
+        print(info["results"].length);
         for(int i=0;i<info["results"].length; i++){
           OneHotel oneHotel = OneHotel(
               hotelId: info["results"][i]["id"],
-              city: info["results"][i]["city"],
+              cityId: info["results"][i]["city"],
               hotelMainPhoto: info["results"][i]["main_image"],
               hotelName: info["results"][i]["name"],
               hotelEmail: info["results"][i]["email"],
@@ -111,7 +111,23 @@ class HotelServiceApi{
           op.add(oneHotel);
 
         }
-        HotelObject hotelObject = HotelObject(count: info["count"], nextUrl: info["next"], previousUrl: info["previous"], oneHotel: op);
+        HotelObject hotelObject = HotelObject(count: info["count"], nextUrl: info["next"] ?? "", previousUrl: info["previous"] ?? "", oneHotel: op);
+        for(int i=0;i<hotelObject.oneHotel.length;i++){
+          print(hotelObject.nextUrl);
+          print(hotelObject.previousUrl);
+          print(hotelObject.count);
+          print(hotelObject.oneHotel[i].cityId);
+          print(hotelObject.oneHotel[i].hotelId);
+          print(hotelObject.oneHotel[i].sumOfRates);
+          print(hotelObject.oneHotel[i].numberOfRates);
+          print(hotelObject.oneHotel[i].creationDate);
+          print(hotelObject.oneHotel[i].hotelCity);
+          print(hotelObject.oneHotel[i].hotelCountry);
+          print(hotelObject.oneHotel[i].hotelPhone);
+          print(hotelObject.oneHotel[i].hotelEmail);
+          print(hotelObject.oneHotel[i].hotelName);
+          print(hotelObject.oneHotel[i].hotelMainPhoto);
+        }
         return Tuple2(true,hotelObject);
       } else {
         print(response.statusCode);
@@ -202,7 +218,7 @@ class HotelServiceApi{
         HotelComments hotelComments = HotelComments(commentId: commentId, hotelId: hotelIdd, userId: userId, comment: commentText);
         OneHotel oneHotel = OneHotel(
             hotelId: secondFunctionInfo["id"],
-            city: secondFunctionInfo["city"],
+            cityId: secondFunctionInfo["city"],
             hotelMainPhoto: secondFunctionInfo["main_image"],
             hotelName: secondFunctionInfo["name"],
             hotelEmail: secondFunctionInfo["email"],

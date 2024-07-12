@@ -38,7 +38,7 @@ dependencies:
   email_validator: ^2.1.17
   tuple: ^2.0.2
   http: ^1.2.0
-  shared_preferences: ^2.2.3
+  #shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

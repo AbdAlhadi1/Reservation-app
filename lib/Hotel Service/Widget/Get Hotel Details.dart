@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Cities.dart';
+import 'package:reservationapp/Classes/Hotel%20Details.dart';
+import 'package:reservationapp/Classes/Hotel%20Object.dart';
+import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
 import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/Cities%20Page.dart';
-
 import '../Screen/Hotels Page.dart';
 
 
-class GetCitiesForHotels extends StatelessWidget {
-  const GetCitiesForHotels({super.key});
+class GetHotelDetails extends StatelessWidget {
+  int hotelId;
+  GetHotelDetails({super.key,required this.hotelId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +17,19 @@ class GetCitiesForHotels extends StatelessWidget {
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getCities(),
+              future:ob.getHotelDetails(hotelId),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
                 } else {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
-                      Cities cities = snapshot.data!.item2[0];
-                      return CitiesPage(cities: cities,);
+                      HotelDetails hotelDetails = snapshot.data!.item2;
+                      return const HomePage();
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),
-                        content: Text(snapshot.data!.item2[0]),
+                        content: Text(snapshot.data!.item2),
                         actions: [
                           ElevatedButton(onPressed: (){
                             Navigator.of(context).pop();
@@ -39,7 +40,7 @@ class GetCitiesForHotels extends StatelessWidget {
                   } else {
                     return AlertDialog(
                       title: const Text("Error"),
-                      content: Text(snapshot.data!.item2[0].toString()),
+                      content: Text(snapshot.data!.item2),
                       actions: [
                         ElevatedButton(onPressed: (){
                           Navigator.of(context).pop();
