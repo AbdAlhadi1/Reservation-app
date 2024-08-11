@@ -23,5 +23,16 @@ class HotelsUrls{
   static const String getHotelFeatures = "/hotel/show_hotel_features/";
   static const String getHotelImage = "/hotel/show_hotel_images/";
   static const String getHotelStays = "/hotel/show_hotel_stays/";
+  static const String bookHotel = "hotel/reserve/";
 
+}
+
+class CarUrls{
+  static const String carServiceBaseUrl = "https://awsdayoubcars.pythonanywhere.com/";
+  static const String showCarCompany = "carcompany/show_car_comapnies/";
+  static const String showCars = "carcompany/show_cars/";
+  static const String searchForCar = "carcompany/search_for_car_companies/";
+  static const String getCities  = "carcompany/show_cities/";
+  static const String showUserReservation = "carcompany/show_customer_reservations/";
+  static const String bookCar = "carcompany/add_car_reservation/";
 }

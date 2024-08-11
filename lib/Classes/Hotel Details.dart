@@ -4,7 +4,7 @@ import 'package:reservationapp/Classes/Hotel.dart';
 
 class HotelDetails {
   late OneHotel oneHotel;
-  late HotelComments hotelComments;
+  late List<HotelComments> hotelComments;
   late HotelFeatures hotelFeatures;
   late HotelImage hotelImage;
   late HotelStays hotelStays;
@@ -58,11 +58,12 @@ class HotelImage{
 }
 
 class HotelStays{
-  late int hotelId;
+  late int hotelId,stayId;
   late String stayType,price,description;
   late List<HotelImage> staysImage;
   HotelStays({
     required this.hotelId,
+    required this.stayId,
     required this.description,
     required this.price,
     required this.staysImage,

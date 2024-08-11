@@ -1,39 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel.dart';
-import 'package:reservationapp/Hotel%20Service/Widget/Get%20Hotel%20Details.dart';
-import 'package:reservationapp/Hotel%20Service/Widget/Get%20Second%20hotel%20Details.dart';
+import 'package:reservationapp/Car%20Service/Screen/Car%20Page.dart';
+import 'package:reservationapp/Car%20Service/Widget/Get%20Car%20For%20Car%20Company.dart';
+import 'package:reservationapp/Classes/One%20Car%20Company.dart';
 
 import '../../Classes/User.dart';
 
-Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
-
-
-
-// ignore: must_be_immutable
-class RoomInfo extends StatelessWidget {
-  String informationName;
-  int numberForTheInformation;
-  IconData informationIcon;
-  RoomInfo({
-    super.key,
-    required this.informationName,
-    required this.numberForTheInformation,
-    required this.informationIcon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(informationIcon,color: secondColor),
-        (numberForTheInformation != 0) ? Text(" $numberForTheInformation  $informationName") : Text(" $informationName"),
-
-      ],
-    );
-  }
-}
 
 
 
@@ -62,20 +34,23 @@ class RatingStars extends StatelessWidget {
 
 
 
-class HotelItem extends StatelessWidget {
-  OneHotel oneHotel;
-  String cityName;
-  bool directBooking;
-  User user;
-  final reservationDetails;
 
-  HotelItem({super.key,required this.user,required this.oneHotel,required this.cityName,required this.directBooking,this.reservationDetails});
+
+class CarCompanyItem extends StatelessWidget {
+  Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
+  String cityName;
+  User user;
+  bool directBooking;
+  final reservationDetails;
+  OneCarCompany oneCarCompany;
+  CarCompanyItem({super.key,required this.oneCarCompany,required this.user,required this.cityName,required this.directBooking,this.reservationDetails});
+
   @override
   Widget build(BuildContext context) {
     String creationDate = "";
-    for(int i=0;i<oneHotel.creationDate.length;i++){
-      if(oneHotel.creationDate[i] != 'T'){
-        creationDate += oneHotel.creationDate[i];
+    for(int i=0;i<oneCarCompany.carCompanyDate.length;i++){
+      if(oneCarCompany.carCompanyDate[i] != 'T'){
+        creationDate += oneCarCompany.carCompanyDate[i];
       } else {
         break;
       }
@@ -92,18 +67,18 @@ class HotelItem extends StatelessWidget {
             SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 230,
-                child: Image(image: NetworkImage(oneHotel.hotelMainPhoto),fit: BoxFit.fill,)
+                child: Image(image: NetworkImage(oneCarCompany.carCompanyMainPhoto),fit: BoxFit.fill,)
             ),
             const SizedBox(height:10,),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(oneHotel.hotelName,style: const TextStyle(
+                Text(oneCarCompany.carCompanyName,style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),),
-                RatingStars(coloredStar:int.parse(oneHotel.numberOfRates[0])),
+                RatingStars(coloredStar:int.parse(oneCarCompany.numberOfRates[0])),
               ],
             ),
             Padding(
@@ -114,7 +89,7 @@ class HotelItem extends StatelessWidget {
                     children: [
                       Icon(Icons.email_rounded,color: secondColor,),
                       const SizedBox(width: 30,),
-                      Text(oneHotel.hotelEmail,style: const TextStyle(
+                      Text(oneCarCompany.carCompanyEmail,style: const TextStyle(
                           fontSize: 16
                       ),)
                     ],
@@ -136,7 +111,7 @@ class HotelItem extends StatelessWidget {
                     children: [
                       Icon(Icons.location_on,color: secondColor,),
                       const SizedBox(width: 30,),
-                      Text("${oneHotel.hotelCountry} - $cityName",style: const TextStyle(
+                      Text("${oneCarCompany.carCompanyCountry} - $cityName",style: const TextStyle(
                           fontSize: 16
                       ),)
                     ],
@@ -148,7 +123,7 @@ class HotelItem extends StatelessWidget {
                     children: [
                       Icon(Icons.phone,color: secondColor,),
                       const SizedBox(width: 30,),
-                      Text(oneHotel.hotelPhone,style: const TextStyle(
+                      Text(oneCarCompany.carCompanyPhone,style: const TextStyle(
                           fontSize: 16
                       ),)
                     ],
@@ -166,23 +141,24 @@ class HotelItem extends StatelessWidget {
                   Visibility(
                     visible: (directBooking)? false:true,
                     child: ElevatedButton(onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetHotelDetails(user: user,hotelId: oneHotel.hotelId,oneHotel: oneHotel,)));
+                      //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetHotelDetails(hotelId: oneHotel.hotelId,oneHotel: oneHotel,)));
                     },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: secondColor,
-                        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero)
+                          backgroundColor: secondColor,
+                          shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero)
                       ), child: Text("More Details",style: TextStyle(
                         color: thirdColor,
                       ),),
                     ),
                   ),
                   ElevatedButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetSecondHotelDetails(user: user,hotelId: oneHotel.hotelId, hotelName:oneHotel.hotelName )));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetCarForCarCompany(user: user,carCompanyId: oneCarCompany.carCompanyId,carCompanyName: oneCarCompany.carCompanyName,city:cityName,)));
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CarsPage()));
                   },style: ElevatedButton.styleFrom(
                       backgroundColor: mainColor,
                       shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero)
-                  ), child: Text("Book Now",style: TextStyle(
-                    color: thirdColor
+                  ), child: Text("Show Cars",style: TextStyle(
+                      color: thirdColor
                   ),)),
                 ],
               ),

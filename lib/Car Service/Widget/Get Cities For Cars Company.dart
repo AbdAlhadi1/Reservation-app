@@ -1,36 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel%20Details.dart';
-import 'package:reservationapp/Classes/Hotel%20Object.dart';
-import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/First%20Hotel%20Details%20Page.dart';
-import '../../Classes/Hotel.dart';
+import 'package:reservationapp/Car%20Service/Api/Car%20Service%20Api.dart';
+import 'package:reservationapp/Car%20Service/Screen/Cities%20For%20Car%20Service.dart';
+
+import '../../Classes/Cities.dart';
 import '../../Classes/User.dart';
-import '../Screen/Hotels Page.dart';
 
-
-class GetHotelDetails extends StatelessWidget {
-  int hotelId;
-  OneHotel oneHotel;
+class GetCitiesForCarCompany extends StatelessWidget {
   User user;
-  GetHotelDetails({super.key,required this.user,required this.hotelId,required this.oneHotel});
+  GetCitiesForCarCompany({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
-    HotelServiceApi ob = HotelServiceApi();
+    CarServiceApi ob = CarServiceApi();
     return SafeArea(
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getHotelDetails(hotelId),
+              future:ob.getCities(),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
                 } else {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
-                      //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return FirstHotelDetailsPage(user: user,oneHotel: oneHotel, hotelFeatures: snapshot.data!.item2[1], hotelComments: snapshot.data!.item2[0], cityName: "");
+                      Cities cities = snapshot.data!.item2;
+                      return CitiesForCarService(user: user,cities: cities,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

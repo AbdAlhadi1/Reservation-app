@@ -6,8 +6,8 @@ import 'package:tuple/tuple.dart';
 // ignore: must_be_immutable
 class SendSignupData extends StatelessWidget {
 
-  TextEditingController  passwordController, firstNameController, lastNameController, emailController, ageController,phoneController;
-  String username,city;
+  TextEditingController  passwordController,username, firstNameController, lastNameController, emailController, ageController,phoneController;
+  String city;
   SendSignupData({
     super.key,
     required this.username,

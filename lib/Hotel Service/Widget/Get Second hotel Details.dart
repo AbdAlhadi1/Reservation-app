@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel%20Details.dart';
-import 'package:reservationapp/Classes/Hotel%20Object.dart';
 import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/First%20Hotel%20Details%20Page.dart';
-import '../../Classes/Hotel.dart';
+import 'package:reservationapp/Hotel%20Service/Screen/Second%20Hotel%20Details%20Page.dart';
+
 import '../../Classes/User.dart';
-import '../Screen/Hotels Page.dart';
+import '../Api/Hotel Service Api.dart';
 
-
-class GetHotelDetails extends StatelessWidget {
+class GetSecondHotelDetails extends StatelessWidget {
   int hotelId;
-  OneHotel oneHotel;
+  String hotelName;
   User user;
-  GetHotelDetails({super.key,required this.user,required this.hotelId,required this.oneHotel});
+  GetSecondHotelDetails({super.key,required this.user,required this.hotelId,required this.hotelName});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class GetHotelDetails extends StatelessWidget {
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getHotelDetails(hotelId),
+              future:ob.secondHotelDetails(hotelId),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
@@ -30,7 +26,7 @@ class GetHotelDetails extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
                       //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return FirstHotelDetailsPage(user: user,oneHotel: oneHotel, hotelFeatures: snapshot.data!.item2[1], hotelComments: snapshot.data!.item2[0], cityName: "");
+                      return SecondHotelDetailsPage(hotelStays: snapshot.data!.item2, hotelName:hotelName,user: user,hotelId: hotelId,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

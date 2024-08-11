@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel%20Details.dart';
-import 'package:reservationapp/Classes/Hotel%20Object.dart';
-import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/First%20Hotel%20Details%20Page.dart';
-import '../../Classes/Hotel.dart';
+import 'package:reservationapp/User%20Info/Api/User%20Info%20Api.dart';
+import 'package:reservationapp/User%20Info/Screen/List%20My%20Reservation.dart';
+
 import '../../Classes/User.dart';
-import '../Screen/Hotels Page.dart';
 
 
-class GetHotelDetails extends StatelessWidget {
-  int hotelId;
-  OneHotel oneHotel;
+class GetUserReservation extends StatelessWidget {
   User user;
-  GetHotelDetails({super.key,required this.user,required this.hotelId,required this.oneHotel});
+  GetUserReservation({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
-    HotelServiceApi ob = HotelServiceApi();
+    UserInfoApi ob = UserInfoApi();
     return SafeArea(
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getHotelDetails(hotelId),
+              future:ob.getAllUserReservation(user.id),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
@@ -30,7 +24,7 @@ class GetHotelDetails extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
                       //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return FirstHotelDetailsPage(user: user,oneHotel: oneHotel, hotelFeatures: snapshot.data!.item2[1], hotelComments: snapshot.data!.item2[0], cityName: "");
+                      return ListMyReservationPage(user: user, info: snapshot.data!.item2);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

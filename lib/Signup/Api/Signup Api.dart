@@ -33,7 +33,7 @@ class SignupApi{
 
 
   Future<Tuple2<bool,String>> signup(
-      String username,
+      TextEditingController username,
       String city,
       TextEditingController passwordController,
       TextEditingController firstNameController,
@@ -44,7 +44,7 @@ class SignupApi{
       ) async {
     try{
       print("helllllllllloooo");
-      final body = jsonEncode(toJson(username, city, passwordController, firstNameController, lastNameController, emailController, ageController, phoneController));
+      //final body = jsonEncode(toJson(username, city, passwordController, firstNameController, lastNameController, emailController, ageController, phoneController));
       print(username);
       print(passwordController.text);
       print(firstNameController.text);
@@ -56,7 +56,7 @@ class SignupApi{
       print("helllllllllloooo111111111111111111");
       Response response = await post(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.signupUrl)
           ,body:{
-            "username" : username,
+            "username" : username.text,
             "password" : passwordController.text,
             "first_name" : firstNameController.text,
             "last_name" : lastNameController.text,

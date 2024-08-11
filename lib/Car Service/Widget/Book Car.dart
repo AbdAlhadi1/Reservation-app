@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel%20Details.dart';
-import 'package:reservationapp/Classes/Hotel%20Object.dart';
-import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/First%20Hotel%20Details%20Page.dart';
-import '../../Classes/Hotel.dart';
+import 'package:reservationapp/Car%20Service/Api/Car%20Service%20Api.dart';
+
 import '../../Classes/User.dart';
-import '../Screen/Hotels Page.dart';
+import '../../Home Page/Screen/Home Page.dart';
 
+class BookCar extends StatelessWidget {
 
-class GetHotelDetails extends StatelessWidget {
-  int hotelId;
-  OneHotel oneHotel;
   User user;
-  GetHotelDetails({super.key,required this.user,required this.hotelId,required this.oneHotel});
+  int carId,carCompanyId;
+  TextEditingController startDate,endDate,picLocation,delLocation;
+
+  BookCar({super.key,required this.user,required this.carId,required this.carCompanyId,required this.startDate,required this.endDate,required this.picLocation,required this.delLocation});
 
   @override
   Widget build(BuildContext context) {
-    HotelServiceApi ob = HotelServiceApi();
+    CarServiceApi ob= CarServiceApi();
     return SafeArea(
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getHotelDetails(hotelId),
+              future:ob.bookCar(carId, carCompanyId, user.id, startDate, endDate, picLocation, delLocation),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
@@ -30,7 +27,17 @@ class GetHotelDetails extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
                       //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return FirstHotelDetailsPage(user: user,oneHotel: oneHotel, hotelFeatures: snapshot.data!.item2[1], hotelComments: snapshot.data!.item2[0], cityName: "");
+                      return AlertDialog(
+                        title: const Text("DONE"),
+                        content: const Text("The Car Has Been Booked Successfully",style: TextStyle(
+                          color: Colors.green,
+                        ),),
+                        actions: [
+                          ElevatedButton(onPressed: (){
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomePage(user: user)));
+                          }, child: const Text("OK"))
+                        ],
+                      );
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

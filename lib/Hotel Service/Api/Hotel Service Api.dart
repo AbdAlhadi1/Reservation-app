@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:reservationapp/Classes/Hotel%20Details.dart';
 import 'package:reservationapp/Classes/Hotel%20Object.dart';
@@ -33,7 +34,7 @@ class HotelServiceApi{
           citiesArray.add(oneCity);
         }
         Cities cities = Cities(count: info["count"] , nextUrl: info["next"] ?? "", previousUrl: info["previous"] ?? "", citiesArray: citiesArray);
-        return Tuple2(true,[cities]);
+        return Tuple2(true,cities);
       }
       else {
         var error = [];
@@ -49,9 +50,9 @@ class HotelServiceApi{
 
 
 
-  Future<Tuple2<bool,List>> searchForHotel(String word) async{
+  Future searchForHotel(TextEditingController word) async{
     try{
-      Response response = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.searchForHotelUrl}$word"));
+      Response response = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.searchForHotelUrl}${word.text}"));
       if(response.statusCode == 200){
         print(response.statusCode);
         var info = jsonDecode(response.body);
@@ -73,17 +74,17 @@ class HotelServiceApi{
 
         }
 
-        HotelObject hotelObject = HotelObject(count: info["count"], nextUrl: info["next"], previousUrl: info["previous"], oneHotel: op);
-        return Tuple2(true, [hotelObject]);
+        HotelObject hotelObject = HotelObject(count: info["count"], nextUrl: info["next"]  ?? "", previousUrl: info["previous"] ?? "", oneHotel: op);
+        return Tuple2(true, hotelObject);
       } else {
         print(response.statusCode);
         print(jsonDecode(response.body));
-        return Tuple2(false, [jsonDecode(response.body).toString()]);
+        return Tuple2(false, jsonDecode(response.body).toString());
       }
 
     }catch(e){
       print("this is the error $e");
-      return Tuple2(false, [e.toString()]);
+      return Tuple2(false, e.toString());
     }
   }
   
@@ -142,107 +143,240 @@ class HotelServiceApi{
   }
 
   Future getHotelDetails (int hotelId) async {
-
+    late int hotelIdd,featureId,imageId,stayId;
+    late String featureName,featureIcon,image,stayType,price,stayDescription;
+    List<HotelImage> staysImages = [];
+    List<HotelFeatures> hotelFeatures = [];
+    List<HotelComments> hotelComments =[];
+    var secondFunctionInfo;
+    //bool firstFun = false , secondFun = false , thirdFun = false , fourthFun = false, lastFun = false;
     try{
-      late int commentId ,hotelIdd, userId,featureId,imageId;
-      late String commentText,featureName,featureIcon,image,stayType,price,stayDescription;
-      List<HotelImage> staysImages = [];
-      var secondFunctionInfo;
-      bool firstFun = false , secondFun = false , thirdFun = false , fourthFun = false, lastFun = false;
       Response firstFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelComments}$hotelId"));
       if(firstFunctionResponse.statusCode == 200){
-        firstFun = true;
         print ("first Function work successful ${firstFunctionResponse.statusCode}");
         var info = jsonDecode(firstFunctionResponse.body);
-        commentId = info["id"];
-        hotelIdd = info["hotel_id"];
-        userId = info["user"];
-        commentText = info["comment_text"];
-      } else {
-        print("first function is not working and the error is ${jsonDecode(firstFunctionResponse.body)}");
-        firstFun = false;
-      }
-      Response secondFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelDetails}$hotelId"));
-      if(secondFunctionResponse.statusCode == 200){
-        firstFun = true;
-        print ("second Function work successful ${secondFunctionResponse.statusCode}");
-        var info = jsonDecode(secondFunctionResponse.body);
-        secondFunctionInfo = info;
-      } else {
-        print("second function is not working and the error is ${jsonDecode(secondFunctionResponse.body)}");
-        secondFun = false;
-      }
-      Response thirdFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelFeatures}$hotelId"));
-      if(thirdFunctionResponse.statusCode == 200){
-        thirdFun = true;
-        print ("third Function work successful ${thirdFunctionResponse.statusCode}");
-        var info = jsonDecode(thirdFunctionResponse.body);
-        featureId = info["id"];
-        featureName = info["name"];
-        featureIcon = info["icone"];
-      } else {
-        print("third function is not working and the error is ${jsonDecode(thirdFunctionResponse.body)}");
-        thirdFun = false;
-      }
-
-      Response fourthFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelImage}"));
-      if(fourthFunctionResponse.statusCode == 200){
-        fourthFun = true;
-        print ("fourth Function work successful ${fourthFunctionResponse.statusCode}");
-        var info = jsonDecode(fourthFunctionResponse.body);
-        imageId = info["id"];
-        image = info["image"];
-      } else {
-        print("fourth function is not working and the error is ${jsonDecode(fourthFunctionResponse.body)}");
-        fourthFun = false;
-      }
-
-      Response lastFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelStays}$hotelId"));
-      if(lastFunctionResponse.statusCode == 200){
-        lastFun = true;
-        print ("last Function work successful ${lastFunctionResponse.statusCode}");
-        var info = jsonDecode(lastFunctionResponse.body);
-        stayType = info["stay_type"];
-        price = info["price"];
-        stayDescription = info["description"];
-        for(int i=0;i<info["stay_images"].length;i++){
-          HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: info["stay_images"][i]["stay"], imageId: info["stay_images"][i]["id"], image: info["stay_images"][i]["image"]);
-          staysImages.add(hotelImage);
+        for(int i=0;i<info.length;i++){
+          HotelComments hotelComment = HotelComments(commentId: info[i]["id"], hotelId: hotelId, userId: info[i]["user"], comment: info[i]["comment_text"]);
+          hotelComments.add(hotelComment);
         }
-      } else {
-        print("last function is not working and the error is ${jsonDecode(lastFunctionResponse.body)}");
-        lastFun = false;
-      }
+        print("hotel comments${hotelComments.length}");
+        try{
+          Response thirdFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelFeatures}$hotelId"));
+          if(thirdFunctionResponse.statusCode == 200){
+           // thirdFun = true;
+            print ("third Function work successful ${thirdFunctionResponse.statusCode}");
+            var info1 = jsonDecode(thirdFunctionResponse.body);
+            print(info1);
 
-      if(firstFun&&secondFun&&thirdFun&&fourthFun&&lastFun){
-        HotelComments hotelComments = HotelComments(commentId: commentId, hotelId: hotelIdd, userId: userId, comment: commentText);
-        OneHotel oneHotel = OneHotel(
-            hotelId: secondFunctionInfo["id"],
-            cityId: secondFunctionInfo["city"],
-            hotelMainPhoto: secondFunctionInfo["main_image"],
-            hotelName: secondFunctionInfo["name"],
-            hotelEmail: secondFunctionInfo["email"],
-            hotelPhone: secondFunctionInfo["phone"],
-            hotelCountry: secondFunctionInfo["country"],
-            hotelCity: "",
-            creationDate: secondFunctionInfo["date_created"],
-            numberOfRates: secondFunctionInfo["number_of_rates"],
-            sumOfRates: secondFunctionInfo["sum_of_rates"]
-        );
-        HotelFeatures hotelFeatures = HotelFeatures(featureId: featureId, hotelId: hotelIdd, name: featureName, icon: featureIcon);
-        HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: hotelIdd, imageId: imageId, image: image);
-        HotelStays hotelStays = HotelStays(hotelId: hotelIdd, description: stayDescription, price: price, staysImage: staysImages, stayType: stayType);
-        HotelDetails hotelDetails = HotelDetails(oneHotel: oneHotel, hotelComments: hotelComments, hotelFeatures: hotelFeatures, hotelImage: hotelImage, hotelStays: hotelStays);
-        return Tuple2(true, hotelDetails);
-      } else {
-        return const Tuple2(false, "an Error occurs when connect to the server please tyr again later");
-      }
+            for(int i=0;i<info1.length;i++){
+              HotelFeatures hotelFeature = HotelFeatures(featureId: info1[i]["id"], hotelId: hotelId, name: info1[i]["name"], icon: info1[i]["icone"]);
+              hotelFeatures.add(hotelFeature);
+            }
+            print(hotelFeatures.length);
+            for(int i=0;i<hotelFeatures.length;i++){
+              print(hotelFeatures[i].name);
+              print(hotelFeatures[i].icon);
+              print(hotelFeatures[i].hotelId);
+            }
 
+            return Tuple2(true, [hotelComments,hotelFeatures]);
+          } else {
+            print(thirdFunctionResponse.statusCode);
+            print("third function is not working and the error is ${jsonDecode(thirdFunctionResponse.body)}");
+            var error = jsonDecode(thirdFunctionResponse.body);
+            return Tuple2(false, error["detail"].toString());
+          }
+        } catch(e) {
+          return Tuple2(false, e.toString());
+        }
+
+      } else {
+        print(firstFunctionResponse.statusCode);
+        print("first function is not working and the error is ${jsonDecode(firstFunctionResponse.body)}");
+        var error = jsonDecode(firstFunctionResponse.body);
+        return Tuple2(false, error["detail"].toString());
+      }
     }catch(e){
       return Tuple2(false, e.toString());
-     }
+      }
+
+  }
+
+
+  Future secondHotelDetails (int hotelId) async {
+    try{
+
+      List<HotelImage> hotelImages = [];
+      List<HotelStays> hotelStays = [];
+      Response lastFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelStays}$hotelId"));
+      if(lastFunctionResponse.statusCode == 200){
+        print ("last Function work successful ${lastFunctionResponse.statusCode}");
+        var info = jsonDecode(lastFunctionResponse.body);
+        print(info);
+        for(int i=0;i<info.length;i++){
+          List<HotelImage> staysImages = [];
+          /*for(int j=0;j<info[i]["stay_images"].length;j++){
+            HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: info[i]["stay_images"][j]["stay"], imageId: info[i]["stay_images"][j]["id"], image: info[i]["stay_images"][j]["image"]);
+            staysImages.add(hotelImage);
+          }*/
+          HotelStays hotelStay = HotelStays(hotelId: hotelId, stayId: info[i]["id"], description: info[i]["description"], price: info[i]["price"], staysImage: staysImages, stayType: info[i]["stay_type"]);
+          hotelStays.add(hotelStay);
+        }
+        return Tuple2(true, hotelStays);
+        /*try {
+          Response fourthFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelImage}"));
+          if (fourthFunctionResponse.statusCode == 200) {
+            print("fourth Function work successful ${fourthFunctionResponse.statusCode}");
+            var info1 = jsonDecode(fourthFunctionResponse.body);
+            print(info1);
+            for(int i=0;i<info1.length;i++){
+              HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: info1[i]["hotel"], imageId: info1[i]["id"], image: info1[i]["image"]);
+              hotelImages.add(hotelImage);
+            }
+          } else {
+            print("fourth function is not working and the error is ${jsonDecode(fourthFunctionResponse.body)}");
+            var error = jsonDecode(fourthFunctionResponse.body);
+            return Tuple2(false, error["detail"].toString());
+          }
+
+        } catch(e) {
+          print("helooooooooo");
+          return Tuple2(false, e.toString());
+        }*/
+
+      } else {
+        print("last function is not working and the error is ${jsonDecode(lastFunctionResponse.body)}");
+        var error = jsonDecode(lastFunctionResponse.body);
+        return Tuple2(false, error["detail"].toString());
+
+      }
+    } catch(e) {
+      return Tuple2(false, e.toString());
+    }
+
+
+
+  }
+  Future bookHotel (int hotelId,int stayId,int userId,TextEditingController startDate, TextEditingController endDate)async{
+    try {
+      print(hotelId);
+      print(stayId);
+      print(userId);
+      print(startDate.text);
+      print(endDate.text);
+      final body = jsonEncode( {
+        "hotel_id": hotelId,
+        "stay_id": stayId,
+        "user_id": userId,
+        "start_date": startDate.text,
+        "end_date": endDate.text,
+        "note": ""
+      });
+      Response response = await post(Uri.parse(HotelsUrls.hotelServiceBaseUrl+HotelsUrls.bookHotel),body:body,headers: {
+      'Content-Type': 'application/json'
+      });
+      if(response.statusCode == 200){
+        print (response.statusCode);
+        return const Tuple2(true, "Done");
+      } else {
+        print(response.statusCode);
+        return Tuple2(false, jsonDecode(response.body).toString());
+      }
+    }catch(e){
+      return Tuple2(false, e.toString());
+    }
 
   }
 
 
 }
+
+
+
+
+
+
+/*if(firstFun&&secondFun&&thirdFun&&fourthFun&&lastFun){
+
+//HotelFeatures hotelFeatures = HotelFeatures(featureId: featureId, hotelId: hotelId, name: featureName, icon: featureIcon);
+HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: hotelId, imageId: imageId, image: image);
+HotelStays hotelStays = HotelStays(stayId: stayId,hotelId: hotelId, description: stayDescription, price: price, staysImage: staysImages, stayType: stayType);
+HotelDetails hotelDetails = HotelDetails(oneHotel: oneHotel, hotelComments: hotelComments, hotelFeatures: hotelFeatures, hotelImage: hotelImage, hotelStays: hotelStays);
+return Tuple2(true, hotelDetails);
+} else {
+return const Tuple2(false, "an Error occurs when connect to the server please tyr again later");
+}
+
+
+
+
+try{
+Response lastFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelStays}$hotelId"));
+if(lastFunctionResponse.statusCode == 200){
+lastFun = true;
+print ("last Function work successful ${lastFunctionResponse.statusCode}");
+var info = jsonDecode(lastFunctionResponse.body);
+stayId = info["id"];
+stayType = info["stay_type"];
+price = info["price"];
+stayDescription = info["description"];
+for(int i=0;i<info["stay_images"].length;i++){
+HotelImage hotelImage = HotelImage(relatedObjectToThisImageId: info["stay_images"][i]["stay"], imageId: info["stay_images"][i]["id"], image: info["stay_images"][i]["image"]);
+staysImages.add(hotelImage);
+}
+} else {
+print("last function is not working and the error is ${jsonDecode(lastFunctionResponse.body)}");
+lastFun = false;
+}
+} catch(e) {
+return Tuple2(false, e.toString());
+}
+
+//////////////////////
+
+try {
+Response fourthFunctionResponse = await get(Uri.parse(
+"${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelImage}"));
+if (fourthFunctionResponse.statusCode == 200) {
+fourthFun = true;
+print("fourth Function work successful ${fourthFunctionResponse
+    .statusCode}");
+var info = jsonDecode(fourthFunctionResponse.body);
+imageId = info["id"];
+image = info["image"];
+
+
+
+} else {
+print("fourth function is not working and the error is ${jsonDecode(
+fourthFunctionResponse.body)}");
+fourthFun = false;
+}
+} catch(e) {
+return Tuple2(false, e.toString());
+}
+
+////////////////////////
+
+
+
+//////////////////////
+
+try{
+Response secondFunctionResponse = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.getHotelDetails}$hotelId"));
+if(secondFunctionResponse.statusCode == 200){
+secondFun = true;
+print ("second Function work successful ${secondFunctionResponse.statusCode}");
+var info = jsonDecode(secondFunctionResponse.body);
+secondFunctionInfo = info;
+
+
+
+} else {
+print(secondFunctionResponse.statusCode);
+print("second function is not working and the error is ${jsonDecode(secondFunctionResponse.body)}");
+secondFun = false;
+}
+}catch(e) {
+return Tuple2(false, e.toString());
+}*/

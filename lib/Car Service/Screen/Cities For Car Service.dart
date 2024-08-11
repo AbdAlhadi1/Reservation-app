@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Hotel%20Service/Widget/City%20item.dart';
+import 'package:reservationapp/Car%20Service/Widget/Get%20Car%20Company.dart';
+
 import '../../Classes/Cities.dart';
 import '../../Classes/User.dart';
-import '../Widget/Get Hotles.dart';
+import '../../Hotel Service/Widget/City item.dart';
 
-// ignore: must_be_immutable
-class CitiesPage extends StatelessWidget {
-  Cities cities ;
+class CitiesForCarService extends StatelessWidget {
+  Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
+  Cities cities;
   User user;
-  CitiesPage({super.key,required this.cities,required this.user});
+  CitiesForCarService({super.key,required this.cities,required this.user});
+
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -31,7 +33,7 @@ class CitiesPage extends StatelessWidget {
               for(int i=0;i<cities.citiesArray.length;i++)Padding(
                 padding: const EdgeInsets.only(left: 15,right: 15, top: 10,bottom: 10),
                 child: CityItem(image:cities.citiesArray[i].cityImage ,cityName:cities.citiesArray[i].cityName ,onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> GetHotels(user: user,cityName: cities.citiesArray[i].cityName,id: cities.citiesArray[i].id,)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> GetCarCompany(user: user,cityName: cities.citiesArray[i].cityName,id: cities.citiesArray[i].id,)));
                 }),
               )
             ],

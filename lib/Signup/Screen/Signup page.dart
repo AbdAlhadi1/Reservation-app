@@ -15,11 +15,13 @@ class _SignupPageState extends State<SignupPage> {
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isVisible = true , isVisible1 = true;
   String city = "";
@@ -145,10 +147,50 @@ class _SignupPageState extends State<SignupPage> {
                       children: [
                         Padding(
                           padding:const EdgeInsets.only(left: 25),
+                          child: Text("UserName",style: TextStyle(
+                              color: thirdColor
+                          ),),
+                        ),
+
+
+                        MyFild(
+                          contorller: userNameController,
+                          obscure: false,
+                          inputTextColor: thirdColor,
+                          preffixIcon:Icon(Icons.person,size: 22,color: thirdColor,),
+                          hintText: "UserName",
+                          borderRadius: BorderRadius.circular(12),
+                          readOnly: false,
+                          rightPadding: 20.0,
+                          leftPadding: 20.0,
+                          height: 70.5,
+                          width: MediaQuery.of(context).size.width,
+                          color: mainColor ,
+                          sidesColor: secondColor,
+                          val:(_){
+                            if(emailController.text.isEmpty){
+                              return "required";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 5,),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:const EdgeInsets.only(left: 25),
                           child: Text("Email",style: TextStyle(
                               color: thirdColor
                           ),),
                         ),
+
+
                         MyFild(
                             contorller: emailController,
                             obscure: false,
@@ -485,7 +527,7 @@ class _SignupPageState extends State<SignupPage> {
                                     }
                                   }
                                   print(username);
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SendSignupData(username: username, phoneController: phoneController, city: city, ageController: ageController, emailController: emailController, lastNameController: lastNameController, firstNameController: firstNameController, passwordController: passwordController
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SendSignupData(username: userNameController, phoneController: phoneController, city: city, ageController: ageController, emailController: emailController, lastNameController: lastNameController, firstNameController: firstNameController, passwordController: passwordController
                                   )));
                                 }
 

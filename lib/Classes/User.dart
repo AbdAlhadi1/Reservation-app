@@ -2,8 +2,9 @@
 class User {
 
   late String userName, password, firstName, lastName, email, country, city, phone, image;
-  late int age;
+  late int age,balance,id;
    User({
+     required this.id,
      required this.userName,
      required this.image,
      required this.city,
@@ -14,6 +15,7 @@ class User {
      required this.firstName,
      required this.age,
      required this.country,
+     required this.balance,
   });
 
 }

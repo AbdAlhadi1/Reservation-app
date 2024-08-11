@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
                       ),
                       onPressed: () {
                         if(formValidate()){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SendLoginData(usernameController:usernameController, passwordController: passwordController)));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>SendLoginData(usernameController:usernameController, passwordController: passwordController)));
                         }
                       },
                       child: Text("LogIn",style: TextStyle(

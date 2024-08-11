@@ -3,11 +3,13 @@ import 'package:reservationapp/Classes/Cities.dart';
 import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
 import 'package:reservationapp/Hotel%20Service/Screen/Cities%20Page.dart';
 
+import '../../Classes/User.dart';
 import '../Screen/Hotels Page.dart';
 
 
 class GetCitiesForHotels extends StatelessWidget {
-  const GetCitiesForHotels({super.key});
+  User user;
+  GetCitiesForHotels({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class GetCitiesForHotels extends StatelessWidget {
                 } else {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
-                      Cities cities = snapshot.data!.item2[0];
-                      return CitiesPage(cities: cities,);
+                      Cities cities = snapshot.data!.item2;
+                      return CitiesPage(cities: cities,user: user,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

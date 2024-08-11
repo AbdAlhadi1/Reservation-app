@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel%20Details.dart';
-import 'package:reservationapp/Classes/Hotel%20Object.dart';
-import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
-import 'package:reservationapp/Hotel%20Service/Screen/First%20Hotel%20Details%20Page.dart';
-import '../../Classes/Hotel.dart';
+import 'package:reservationapp/Car%20Service/Api/Car%20Service%20Api.dart';
+import 'package:reservationapp/Car%20Service/Screen/Car%20Company%20Page.dart';
+import 'package:reservationapp/Classes/Car%20Company%20Object.dart';
+
 import '../../Classes/User.dart';
-import '../Screen/Hotels Page.dart';
 
 
-class GetHotelDetails extends StatelessWidget {
-  int hotelId;
-  OneHotel oneHotel;
+class GetCarCompany extends StatelessWidget {
+  String cityName;
+  int id;
   User user;
-  GetHotelDetails({super.key,required this.user,required this.hotelId,required this.oneHotel});
+  GetCarCompany({super.key,required this.cityName,required this.id,required this.user});
 
   @override
   Widget build(BuildContext context) {
-    HotelServiceApi ob = HotelServiceApi();
+    CarServiceApi ob = CarServiceApi();
     return SafeArea(
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getHotelDetails(hotelId),
+              future:ob.showCarCompany(),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
                 } else {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
-                      //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return FirstHotelDetailsPage(user: user,oneHotel: oneHotel, hotelFeatures: snapshot.data!.item2[1], hotelComments: snapshot.data!.item2[0], cityName: "");
+                      CarCompanyObject carCompanyObject = snapshot.data!.item2;
+                      return CarCompanyPage(user: user,carCompanyObject: carCompanyObject,cityName: cityName,id: id,secondCarCompanyObject: carCompanyObject,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),
@@ -45,7 +42,7 @@ class GetHotelDetails extends StatelessWidget {
                   } else {
                     return AlertDialog(
                       title: const Text("Error"),
-                      content: Text(snapshot.data!.item2),
+                      content: Text(snapshot.data!.item2.toString()),
                       actions: [
                         ElevatedButton(onPressed: (){
                           Navigator.of(context).pop();
