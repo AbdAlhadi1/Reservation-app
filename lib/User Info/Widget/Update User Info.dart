@@ -6,7 +6,8 @@ import '../../Classes/User.dart';
 
 class UpdateUserInfo extends StatelessWidget {
   User user;
-  UpdateUserInfo({super.key,required this.user});
+  TextEditingController firstName,lastName,phone;
+  UpdateUserInfo({super.key,required this.user,required this.firstName,required this.lastName,required this.phone});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class UpdateUserInfo extends StatelessWidget {
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.updateUserInfo(user),
+              future:ob.updateUserInfo(user,firstName,lastName,phone),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();

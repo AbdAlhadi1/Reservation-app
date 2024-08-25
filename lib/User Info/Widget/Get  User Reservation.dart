@@ -16,7 +16,7 @@ class GetUserReservation extends StatelessWidget {
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.getAllUserReservation(user.id),
+              future:ob.getAllUserCarReservation(user.userName),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
@@ -24,7 +24,7 @@ class GetUserReservation extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
                       //HotelDetails hotelDetails = snapshot.data!.item2;
-                      return ListMyReservationPage(user: user, info: snapshot.data!.item2);
+                      return ListMyCarReservationPage(user: user, info: snapshot.data!.item2,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

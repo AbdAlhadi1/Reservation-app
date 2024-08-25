@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Home%20Page/Screen/Home%20Page.dart';
-import 'package:reservationapp/Hotel%20Service/Api/Hotel%20Service%20Api.dart';
+import 'package:reservationapp/User%20Info/Api/User%20Info%20Api.dart';
 
 import '../../Classes/User.dart';
+import '../Screen/List My Hotel Reservation.dart';
 
-class BookHotel extends StatelessWidget {
+
+class GetHotelReservation extends StatelessWidget {
   User user;
-  int stayId,hotelId;
-  TextEditingController startDate,endDate;
-  BookHotel({super.key,required this.user,required this.hotelId,required this.stayId,required this.startDate,required this.endDate});
+  GetHotelReservation({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
-    HotelServiceApi ob = HotelServiceApi();
-    return  SafeArea(
+    UserInfoApi ob = UserInfoApi();
+    return SafeArea(
       child: Scaffold(
           body: Center(
             child: FutureBuilder(
-              future:ob.bookHotel(hotelId, stayId, user.userName, startDate, endDate),
+              future:ob.getAllUserHotelReservation(user.userName),
               builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const CircularProgressIndicator();
@@ -25,20 +24,7 @@ class BookHotel extends StatelessWidget {
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.data!.item1 == true){
                       //HotelDetails hotelDetails = snapshot.data!.item2;
-                      var info = snapshot.data!.item2;
-                      int newBalance = info["balance"];
-                      user.balance = newBalance;
-                      return AlertDialog(
-                        title: const Text("DONE"),
-                        content: const Text("The Hotel Has Been Booked Successfully",style: TextStyle(
-                          color: Colors.green,
-                        ),),
-                        actions: [
-                          ElevatedButton(onPressed: (){
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomePage(user: user)));
-                          }, child: const Text("OK"))
-                        ],
-                      );
+                      return ListHotelReservation(user: user, info: snapshot.data!.item2 ,);
                     } else {
                       return AlertDialog(
                         title: const Text("Error"),

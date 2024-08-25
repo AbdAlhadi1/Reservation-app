@@ -51,45 +51,22 @@ class _HotelsPageState extends State<HotelsPage> {
             color: thirdColor
           ),),
         ),
-        body:(widget.cityId != -1) ? (widget.hotelObject.oneHotel.length != 0) ? ListView(
-            children: [
-              const SizedBox(height: 25,),
-              MyFild(
-                inputTextColor: Colors.black,
-                contorller: searchController,
-                obscure: false,
-                hintText: "Search....",
-                borderRadius: BorderRadius.circular(12),
-                readOnly: false,
-                rightPadding: 20.0,
-                leftPadding: 20.0,
-                height: 70.5,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                sidesColor: Colors.black38,
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetHotelsFromSearch(user: widget.user,wordToSearch: searchController)));
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 5,),
-              for(int i=0;i<widget.hotelObject.oneHotel.length;i++)Padding(
-                padding: const EdgeInsets.only(top: 9,bottom: 9),
-                child: HotelItem(user: widget.user,oneHotel: widget.hotelObject.oneHotel[i],cityName: widget.cityName,directBooking: false,reservationDetails: false),
-              )
-            ],
-          ): const Center(
-          child:  Text("There Is No Hotels Yet...",style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 28,
-              color: Colors.grey
+        body:(widget.cityId == -1) ? (widget.secondHotelObject.oneHotel.isEmpty)? const  Center(
+          child: Text("There is No Hotel With This Name",style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 22,
+            color: Colors.grey,
           ),),
-        )
-
-            : ListView(
+        ): ListView(
+          children: [
+            const SizedBox(height: 25,),
+            const SizedBox(height: 5,),
+            for(int i=0;i<widget.secondHotelObject.oneHotel.length;i++) Padding(
+              padding: const EdgeInsets.only(top: 9,bottom: 9),
+              child: HotelItem(user: widget.user,oneHotel: widget.secondHotelObject.oneHotel[i],cityName: "",directBooking: false,reservationDetails: false),
+            ),
+          ],
+        ): (widget.hotelObject.oneHotel.length != 0) ? ListView(
           children: [
             const SizedBox(height: 25,),
             MyFild(
@@ -114,11 +91,17 @@ class _HotelsPageState extends State<HotelsPage> {
             ),
 
             const SizedBox(height: 5,),
-            for(int i=0;i<widget.secondHotelObject.oneHotel.length;i++) Padding(
+            for(int i=0;i<widget.hotelObject.oneHotel.length;i++)Padding(
               padding: const EdgeInsets.only(top: 9,bottom: 9),
-              child: HotelItem(user: widget.user,oneHotel: widget.hotelObject.oneHotel[i],cityName: "",directBooking: false),
-            ),
+              child: HotelItem(user: widget.user,oneHotel: widget.hotelObject.oneHotel[i],cityName: widget.cityName,directBooking: false,reservationDetails: false),
+            )
           ],
+        ): const Center(
+          child:  Text("There Is No Hotels Yet...",style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 28,
+              color: Colors.grey
+          ),),
         )
       ),
     );

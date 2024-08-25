@@ -55,9 +55,12 @@ class HotelServiceApi{
       Response response = await get(Uri.parse("${HotelsUrls.hotelServiceBaseUrl}${HotelsUrls.searchForHotelUrl}${word.text}"));
       if(response.statusCode == 200){
         print(response.statusCode);
+
         var info = jsonDecode(response.body);
+        print(info);
         List<OneHotel> op = [];
         for(int i=0;i<info["results"].length; i++){
+          print("aa");
           OneHotel oneHotel = OneHotel(
               hotelId: info["results"][i]["id"],
               cityId: info["results"][i]["city"],
@@ -75,6 +78,7 @@ class HotelServiceApi{
         }
 
         HotelObject hotelObject = HotelObject(count: info["count"], nextUrl: info["next"]  ?? "", previousUrl: info["previous"] ?? "", oneHotel: op);
+        print("end");
         return Tuple2(true, hotelObject);
       } else {
         print(response.statusCode);
@@ -257,17 +261,16 @@ class HotelServiceApi{
 
 
   }
-  Future bookHotel (int hotelId,int stayId,int userId,TextEditingController startDate, TextEditingController endDate)async{
+  Future bookHotel (int hotelId,int stayId,String username,TextEditingController startDate, TextEditingController endDate)async{
     try {
       print(hotelId);
       print(stayId);
-      print(userId);
       print(startDate.text);
       print(endDate.text);
       final body = jsonEncode( {
         "hotel_id": hotelId,
         "stay_id": stayId,
-        "user_id": userId,
+        "username": username,
         "start_date": startDate.text,
         "end_date": endDate.text,
         "note": ""
@@ -277,7 +280,7 @@ class HotelServiceApi{
       });
       if(response.statusCode == 200){
         print (response.statusCode);
-        return const Tuple2(true, "Done");
+        return Tuple2(true, jsonDecode(response.body));
       } else {
         print(response.statusCode);
         return Tuple2(false, jsonDecode(response.body).toString());

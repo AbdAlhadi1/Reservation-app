@@ -67,9 +67,9 @@ class HotelItem extends StatelessWidget {
   String cityName;
   bool directBooking;
   User user;
-  final reservationDetails;
+  bool reservationDetails;
 
-  HotelItem({super.key,required this.user,required this.oneHotel,required this.cityName,required this.directBooking,this.reservationDetails});
+  HotelItem({super.key,required this.user,required this.oneHotel,required this.cityName,required this.directBooking,required this.reservationDetails});
   @override
   Widget build(BuildContext context) {
     String creationDate = "";

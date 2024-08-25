@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:reservationapp/Classes/Hotel.dart';
-import 'package:reservationapp/Hotel%20Service/Widget/Hotel%20Item.dart';
 
+import '../../Classes/Hotel.dart';
 import '../../Classes/User.dart';
+import '../../Hotel Service/Widget/Hotel Item.dart';
 
-class ReservationDetailsPage extends StatelessWidget {
+class HotelReservationDetails extends StatelessWidget {
   User user;
   var info;
-  ReservationDetailsPage({super.key,required this.user,required this.info});
+  Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
+  // hotel image   https://awsdayoubhotels.pythonanywhere.com/media/hotel_main_image/gb.jpeg
+  // car image https://www.timescar-rental.com/images/top/top_ph001.png?20200120
+
+  HotelReservationDetails({super.key,required this.user,required this.info});
 
   @override
   Widget build(BuildContext context) {
-    Color mainColor = const Color(0xFF262B44), secondColor = const Color(0xFFed3954), thirdColor = Colors.white;
-    // hotel image   https://awsdayoubhotels.pythonanywhere.com/media/hotel_main_image/gb.jpeg
-    // car image https://www.timescar-rental.com/images/top/top_ph001.png?20200120
-    print(info["carcompany_image"]);
-    String url = "https://awsdayoubcars.pythonanywhere.com/"+info["carcompany_image"];
-    OneHotel oneHotel = OneHotel(hotelId: 0, cityId: 0, hotelMainPhoto: url, hotelName: info["carcompany_name"], hotelEmail: info["carcompany_email"], hotelPhone: info["carcompany_phone"], hotelCountry: info["carcompany_country"], hotelCity: "", creationDate: info["carcompany_datecreated"], numberOfRates: info["carcompany_numberofrates"].toString(), sumOfRates: "");
+    String url = "https://awsdayoubhotels.pythonanywhere.com/"+info["hotel_image"];
+    OneHotel oneHotel = OneHotel(hotelId: 0, cityId: 0, hotelMainPhoto: url, hotelName: info["hotel_name"], hotelEmail: info["hotel_email"], hotelPhone: info["hotel_phone"], hotelCountry: info["hotel_country"], hotelCity: "", creationDate: info["hotel_datecreated"], numberOfRates: info["hotel_numberofrates"].toString(), sumOfRates: "20.00");
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -55,28 +56,28 @@ class ReservationDetailsPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 25,right: 25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("First Name :",style: TextStyle(
+                      children: [
+                        const Text("First Name :",style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600
-                          ),),
-                          Text(user.firstName)
-                        ],
-                      ),
+                        ),),
+                        Text(user.firstName)
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10,),
                   Padding(
                     padding: const EdgeInsets.only(left: 25,right: 25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Last Name :",style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),),
-                          Text(user.lastName)
-                        ],
-                      ),
+                      children: [
+                        const Text("Last Name :",style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600
+                        ),),
+                        Text(user.lastName)
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10,),
 
@@ -117,7 +118,7 @@ class ReservationDetailsPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600
                         ),),
-                        Text(info["car_company_name"])
+                        Text(info["hotel_name"])
                       ],
                     ),
                   ),
@@ -127,11 +128,11 @@ class ReservationDetailsPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Car Type :",style: TextStyle(
+                        const Text("Room Type :",style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600
                         ),),
-                        Text(info["car_type"])
+                        Text(info["stay_staytype"])
                       ],
                     ),
                   ),
@@ -145,7 +146,7 @@ class ReservationDetailsPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600
                         ),),
-                        Text("\$ ${info["price"]}")
+                        Text("\$ "+info["stay_price"].toString())
                       ],
                     ),
                   ),
@@ -159,7 +160,7 @@ class ReservationDetailsPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600
                         ),),
-                        Text((info["calculate_total_price"] == 0.0)?"\$ ${info["price"]}":"\$ ${info["calculate_total_price"]}")
+                        Text((info["calculate_total_price"] == 0.0)?"\$ "+info["stay_price"].toString():"\$ " +info["calculate_total_price"].toString())
                       ],
                     ),
                   ),
@@ -192,40 +193,6 @@ class ReservationDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Visibility(
-                    visible: (info ["is_car_reservation"] ) ? true : false ,
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 25,right: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Receiving location :",style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),),
-                          Text("Awkaf Street")
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Visibility(
-                    visible: (info ["is_car_reservation"] ) ? true : false,
-                      child: const Padding(
-                      padding: EdgeInsets.only(left: 25,right: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Delivery location :",style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),),
-                          Text("Awkaf Street")
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
 
                 ],
               ),

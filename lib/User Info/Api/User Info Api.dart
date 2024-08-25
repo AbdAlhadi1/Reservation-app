@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:reservationapp/Classes/User.dart';
 import 'package:reservationapp/Server/host.dart';
@@ -26,19 +27,18 @@ class UserInfoApi {
   }
 
 
-  Future updateUserInfo (User user) async {
+  Future updateUserInfo (User user,TextEditingController firstName,TextEditingController lastName,TextEditingController phone) async {
     try{
       final body = jsonEncode( {
         "username": user.userName,
         "password": user.password,
-        "first_name": user.firstName,
-        "last_name":user.lastName,
+        "first_name": firstName.text,
+        "last_name":lastName.text,
         "email": user.email,
         "age": user.age,
         "country": user.country,
         "city": user.city,
-        "phone": user.phone,
-        "image": user.image,
+        "phone": phone.text,
       });
 
       Response response = await put(Uri.parse("${UserUrls.userServiceBaseUrl}${UserUrls.editUserInfo}"),
@@ -63,11 +63,11 @@ class UserInfoApi {
   }
 
   
-  Future getAllUserReservation (int userId) async {
+  Future getAllUserCarReservation (String username) async {
+
     try{
-      Response response = await get(Uri.parse("${CarUrls.carServiceBaseUrl}${CarUrls.showUserReservation}$userId"));
+      Response response = await get(Uri.parse("${CarUrls.carServiceBaseUrl}${CarUrls.showUserReservation}$username"));
       if(response.statusCode == 200){
-        print(response.statusCode);
         return Tuple2(true, jsonDecode(response.body));
       } else {
         print(response.statusCode);
@@ -78,7 +78,43 @@ class UserInfoApi {
     }catch(e){
       return Tuple2(false, e.toString());
     }
+
+
     
+  }
+
+
+
+  Future getAllUserHotelReservation (String username) async {
+
+    try{
+      Response response = await get(Uri.parse(HotelsUrls.hotelServiceBaseUrl+HotelsUrls.showHotelReservation+username));;
+      if(response.statusCode == 200){
+        print(response.statusCode);
+        return Tuple2(true, jsonDecode(response.body));
+      } else {
+        print(response.statusCode);
+        print(jsonDecode(response.body));
+        return Tuple2(false, jsonDecode(response.body).toString());
+      }
+
+    }catch(e){
+      return Tuple2(false, e.toString());
+    }
+  }
+  Future logOut() async{
+    try{
+      Response response = await post(Uri.parse(UserUrls.userServiceBaseUrl+UserUrls.logoutUrl));
+      if(response.statusCode == 200){
+        print(response.statusCode);
+        return const Tuple2(true, "done");
+      } else {
+        print(response.statusCode);
+        return Tuple2(false, jsonDecode(response.body));
+      }
+    }catch(e){
+      return Tuple2(false, e.toString());
+    }
   }
 
 }

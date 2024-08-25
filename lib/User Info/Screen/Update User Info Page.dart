@@ -29,13 +29,13 @@ class _UpdateUserInfoPageState extends State<UpdateUserInfoPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController firstNameController = TextEditingController(
-        text: widget.user.firstName
+
     );
     TextEditingController lastNameController = TextEditingController(
-        text: widget.user.lastName
+
     );
     TextEditingController phoneController = TextEditingController(
-        text: widget.user.phone
+
     );
     TextEditingController userNameController = TextEditingController(
         text: widget.user.userName
@@ -325,7 +325,7 @@ class _UpdateUserInfoPageState extends State<UpdateUserInfoPage> {
                             }
                             if(checkForm() && city !=""){
                               User user = User(id: widget.user.id, userName: widget.user.userName, image: "", city: city, email: widget.user.email, password: widget.user.password, phone: phoneController.text, lastName: lastNameController.text, firstName: firstNameController.text, age: widget.user.age, country: widget.user.country, balance: widget.user.balance);
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateUserInfo(user: user)));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateUserInfo(user: user,firstName: firstNameController,lastName: lastNameController,phone: phoneController,)));
                             }
 
                           }, child:Text("Update",style: TextStyle(

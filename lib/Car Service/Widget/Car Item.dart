@@ -15,6 +15,7 @@ class CarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String url = "https://awsdayoubcars.pythonanywhere.com/"+carObject.carImages[0].image;
     //   https://edgecast-img.yahoo.net/mysterio/api/983CCB80DA7F07223B632331CCA4B9558D9C553392825271D16765A48A02E8E9/autoblog/resizefill_w768_h432;quality_85;format_webp;cc_31536000;/https://s.aolcdn.com/commerce/autodata/images/USD30TOC021G021001.jpg
     return  InkWell(
       onTap: (){
@@ -28,7 +29,7 @@ class CarItem extends StatelessWidget {
             SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 230,
-                child: Image(image: NetworkImage(carObject.carImages[0].image),fit: BoxFit.fill,)
+                child: Image(image: NetworkImage(url),fit: BoxFit.fill,)
             ),
             const SizedBox(height:10,),
             const Row(

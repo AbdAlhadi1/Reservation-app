@@ -206,11 +206,11 @@ class CarServiceApi{
 
 
   }
-  Future bookCar(int carId,int carCompanyId,int userId,TextEditingController startDate,TextEditingController endDate,TextEditingController picLocation,TextEditingController delLocation) async {
+  Future bookCar(int carId,int carCompanyId,String username,TextEditingController startDate,TextEditingController endDate,TextEditingController picLocation,TextEditingController delLocation) async {
     try {
       print(carId.runtimeType);
       print(carCompanyId.runtimeType);
-      print(userId.runtimeType);
+      //print(userId.runtimeType);
       print(startDate.text.runtimeType);
       print(endDate.text.runtimeType);
       print(picLocation.text.runtimeType);
@@ -218,9 +218,9 @@ class CarServiceApi{
       print(CarUrls.carServiceBaseUrl.runtimeType);
       print(CarUrls.bookCar.runtimeType);
       final body =jsonEncode({
-        "car_company":carCompanyId,
-        "car":carId,
-        "user":userId,
+        "car_company_id":carCompanyId,
+        "car_id":carId,
+        "username":username,
         "start_date" : startDate.text,
         "end_date" : endDate.text,
         "pickup_location": picLocation.text,
@@ -235,7 +235,8 @@ class CarServiceApi{
       print("object");
       if(response.statusCode == 200){
         print (response.statusCode);
-        return const Tuple2(true, "done");
+        print(jsonDecode(response.body));
+        return Tuple2(true, jsonDecode(response.body));
       } else {
         print(response.statusCode);
         return Tuple2(false, jsonDecode(response.body).toString());

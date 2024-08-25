@@ -26,6 +26,19 @@ class _CarCompanyPageState extends State<CarCompanyPage> {
   TextEditingController searchController = TextEditingController();
   //OneCarCompany oneCarCompany = OneCarCompany(carCompanyId: 1, cityId: 1, carCompanyName: "MR Car", carCompanyEmail: "MR_Car@gmail.com", carCompanyCountry: "Syria", carCompanyCity: "", carCompanyDate: "2024 - 05 - 4", carCompanyMainPhoto: "https://www.timescar-rental.com/images/top/top_ph001.png?20200120", carCompanyPhone: "+963933223322", numberOfRates: "4", sumOfRates: "20");
   @override
+  void initState() {
+    List<OneCarCompany> op = [];
+    for(int i=0;i<widget.carCompanyObject.carCompany.length;i++){
+      if(widget.carCompanyObject.carCompany[i].cityId == widget.id){
+        op.add(widget.carCompanyObject.carCompany[i]);
+      }
+    }
+    CarCompanyObject newCarCompanyObject = CarCompanyObject(count: widget.carCompanyObject.count, nextUrl: widget.carCompanyObject.nextUrl, previousUrl: widget.carCompanyObject.previousUrl, carCompany: op);
+    widget.carCompanyObject = newCarCompanyObject;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -38,7 +51,22 @@ class _CarCompanyPageState extends State<CarCompanyPage> {
                 color: thirdColor
             ),),
           ),
-          body:(widget.id != -1) ? (widget.carCompanyObject.carCompany.isNotEmpty) ? ListView(
+          body:(widget.id == -1) ? (widget.secondCarCompanyObject.carCompany.isEmpty)? const  Center(
+            child: Text("There is No Car Company With This Name",style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 22,
+              color: Colors.grey,
+            ),),
+          ):ListView(
+            children: [
+              const SizedBox(height: 25,),
+              const SizedBox(height: 5,),
+              for(int i=0;i<widget.secondCarCompanyObject.carCompany.length;i++) Padding(
+                padding: const EdgeInsets.only(top: 9,bottom: 9),
+                child:CarCompanyItem(user: widget.user,oneCarCompany: widget.secondCarCompanyObject.carCompany[i], cityName: "", directBooking: true,reservationDetails: false,)
+              ),
+            ],
+          ) : (widget.carCompanyObject.carCompany.isNotEmpty) ? ListView(
             children: [
               const SizedBox(height: 25,),
               MyFild(
@@ -64,8 +92,8 @@ class _CarCompanyPageState extends State<CarCompanyPage> {
 
               const SizedBox(height: 5,),
               for(int i=0;i<widget.carCompanyObject.carCompany.length;i++)Padding(
-                padding: const EdgeInsets.only(top: 9,bottom: 9),
-                child: CarCompanyItem(user: widget.user,oneCarCompany: widget.carCompanyObject.carCompany[i], cityName: widget.cityName, directBooking: true,reservationDetails: false,)
+                  padding: const EdgeInsets.only(top: 9,bottom: 9),
+                  child: CarCompanyItem(user: widget.user,oneCarCompany: widget.carCompanyObject.carCompany[i], cityName: widget.cityName, directBooking: true,reservationDetails: false,)
               )
             ],
           ): const Center(
@@ -74,38 +102,6 @@ class _CarCompanyPageState extends State<CarCompanyPage> {
                 fontSize: 28,
                 color: Colors.grey
             ),),
-          )
-
-              : ListView(
-            children: [
-              const SizedBox(height: 25,),
-              MyFild(
-                inputTextColor: Colors.black,
-                contorller: searchController,
-                obscure: false,
-                hintText: "Search....",
-                borderRadius: BorderRadius.circular(12),
-                readOnly: false,
-                rightPadding: 20.0,
-                leftPadding: 20.0,
-                height: 70.5,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                sidesColor: Colors.black38,
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetCarsSearchResult(user: widget.user,wordToSearch: searchController)));
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 5,),
-              for(int i=0;i<widget.secondCarCompanyObject.carCompany.length;i++) Padding(
-                padding: const EdgeInsets.only(top: 9,bottom: 9),
-                child:CarCompanyItem(user: widget.user,oneCarCompany: widget.secondCarCompanyObject.carCompany[i], cityName: "", directBooking: true,reservationDetails: false,)
-              ),
-            ],
           )
       ),
     );

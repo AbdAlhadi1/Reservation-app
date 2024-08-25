@@ -6,7 +6,7 @@ class UserUrls{
   static const String sendEmailAndReceiveVerificationCode = "users/SendEmailAndReceiveVerificationCodeEmail/";
   static const String sendVerificationCode = "users/SendVerificationCode/";
   static const String sendNewPasswordForForgetPassword = "users/password_reset/";
-  static const String logoutUrl = "users/delete_user/";
+  static const String logoutUrl = "users/logout/";
   static const String editUserInfo = "users/edit_user_info/";
 }
 
@@ -24,7 +24,7 @@ class HotelsUrls{
   static const String getHotelImage = "/hotel/show_hotel_images/";
   static const String getHotelStays = "/hotel/show_hotel_stays/";
   static const String bookHotel = "hotel/reserve/";
-
+  static String showHotelReservation = "hotel/show_customer_reservations/";
 }
 
 class CarUrls{

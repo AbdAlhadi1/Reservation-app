@@ -51,7 +51,7 @@ class _FirstHotelDetailsPageState extends State<FirstHotelDetailsPage> {
                       padding: const EdgeInsets.only(left: 10,bottom: 10),
                       child: Row(
                         children: [
-                          Image(image: AssetImage(op[i]),width: 40,height: 40,),
+                          Image(image: NetworkImage("https://awsdayoubhotels.pythonanywhere.com/"+widget.hotelFeatures[i].icon),width: 40,height: 40,),
                           const SizedBox(width: 10,),
                           Text(widget.hotelFeatures[i].name,style: const TextStyle(
                             fontSize: 17,

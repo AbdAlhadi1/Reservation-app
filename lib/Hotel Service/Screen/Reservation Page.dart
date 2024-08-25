@@ -391,7 +391,7 @@ class _HotelReservationPageState extends State<HotelReservationPage> {
                                       children: [
                                         ElevatedButton(onPressed: (){
                                           if(check()){
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BookHotel(user: widget.user, hotelId: widget.hotelId, stayId: widget.stayId, startDate: startDateController, endDate: endDateController)));
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BookHotel(user: widget.user, hotelId: widget.hotelId, stayId: widget.stayId, startDate: startDateController, endDate: endDateController)));
                                           }
                                         }, child: const Text("Book"))
                                       ],

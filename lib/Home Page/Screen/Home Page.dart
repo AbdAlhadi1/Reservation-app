@@ -5,6 +5,9 @@ import 'package:reservationapp/Hotel%20Service/Widget/Get%20Cities%20For%20Hotel
 import 'package:reservationapp/Hotel%20Service/Widget/Hotel%20Item.dart';
 import 'package:reservationapp/User%20Info/Screen/Update%20User%20Info%20Page.dart';
 import 'package:reservationapp/User%20Info/Widget/Get%20%20User%20Reservation.dart';
+import 'package:reservationapp/User%20Info/Widget/Get%20Hotel%20Reservation.dart';
+import 'package:reservationapp/User%20Info/Widget/Logout.dart';
+import 'package:reservationapp/User%20Info/Widget/User%20Profile%20body.dart';
 import '../../Classes/Hotel.dart';
 import '../../Classes/User.dart';
 import '../../drawer_components.dart';
@@ -112,26 +115,6 @@ class _HomePageState extends State<HomePage> {
 
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: mainColor,
-            onTap: (itemIndex) {
-              setState(() {
-                currentBottomNavigationBarItem = itemIndex;
-              });
-              if(itemIndex == 1){
-                setState(() {
-                  scaffoldKey.currentState?.openDrawer();
-                });
-              }
-            },
-            currentIndex: currentBottomNavigationBarItem,
-            selectedItemColor: secondColor,
-            unselectedItemColor: thirdColor,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Setting")
-            ]),
-
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: secondColor,
@@ -179,10 +162,38 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetUserReservation(user: widget.user)));
                           },
-                          text: "List My Reservation",
+                          text: "List My Car Reservation",
                           iconColor: secondColor,
                           color: mainColor,
                           icon: Icons.list),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Drawer_component(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>GetHotelReservation(user: widget.user)));
+                          },
+                          text: "List My Hotel Reservation",
+                          iconColor: secondColor,
+                          color: mainColor,
+                          icon: Icons.list),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Drawer_component(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserBody(user: widget.user)));
+                          },
+                          text: "My Profile",
+                          iconColor: secondColor,
+                          color: mainColor,
+                          icon: Icons.person),
                     ),
                     const Divider(
                       color: Colors.black,
@@ -195,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(left: 15),
                       child: Drawer_component(
                         onTap: () {
-
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LogOut()));
                         },
                         text: "Logout",
                         iconColor: secondColor,
